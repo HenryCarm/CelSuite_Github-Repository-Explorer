@@ -1,3 +1,11 @@
+<p align="center"><img src="icon.webp" width="96" style="border-radius:22px" alt="icon"/></p>
+<p align="center">
+  <img src="https://img.shields.io/github/v/release/HenryCarm/CelSuite_Github-Repository-Explorer?style=flat-square&color=ff4d4d" alt="release">
+  <img src="https://img.shields.io/badge/single--file-108KB-ff9f43?style=flat-square" alt="size">
+  <img src="https://img.shields.io/badge/dependencies-zero-6ccb5f?style=flat-square" alt="deps">
+  <img src="https://img.shields.io/badge/license-proprietary-8a8a8a?style=flat-square" alt="license">
+</p>
+
 # CelSuite — GitHub Repository Explorer
 
 **Windows-Explorer-grade file management for GitHub repos, packed into one HTML file. Upload, move, rename, delete, preview, edit — every action lands as a single clean atomic commit.**
