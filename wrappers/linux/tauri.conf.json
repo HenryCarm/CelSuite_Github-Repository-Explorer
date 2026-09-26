@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "CelSuiteRepoExplorer",
+  "version": "269.26.3",
+  "identifier": "com.henryjayz.celsuite.explorer",
+  "build": {
+    "frontendDist": "../../app"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "CelSuite GitHub Repository Explorer",
+        "width": 1280,
+        "height": 800,
+        "center": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["appimage", "deb"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/256x256.png"
+    ],
+    "publisher": "HenryJayz",
+    "copyright": "Copyright (c) 2026 HenryJayz",
+    "category": "DeveloperTool",
+    "shortDescription": "Windows-Explorer-grade file management for GitHub repos"
+  }
+}

@@ -1,0 +1,4 @@
+-keep public class com.henryjayz.celsuite.explorer.MainActivity { *; }
+-keepattributes JavascriptInterface, SourceFile, LineNumberTable
+-renamesourcefileattribute SourceFile
+-dontwarn android.webkit.**

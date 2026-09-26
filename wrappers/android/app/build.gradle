@@ -1,0 +1,55 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.henryjayz.celsuite.explorer'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.henryjayz.celsuite.explorer"
+        minSdk 24
+        targetSdk 34
+        versionCode 269263
+        versionName "269.26.3"
+    }
+
+    signingConfigs {
+        release {
+            def ks = System.getenv("KS_FILE")
+            if (ks != null && !ks.isEmpty()) {
+                storeFile file(ks)
+                storePassword System.getenv("KS_PASS")
+                keyAlias System.getenv("KEY_ALIAS")
+                keyPassword System.getenv("KEY_PASS")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            def ksEnv = System.getenv("KS_FILE")
+            if (ksEnv != null && !ksEnv.isEmpty()) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+
+    sourceSets {
+        main {
+            assets.srcDirs += new File(rootProject.projectDir, "../../app").absolutePath
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        abortOnError false
+    }
+}
