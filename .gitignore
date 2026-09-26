@@ -5,3 +5,10 @@ __pycache__/
 .venv/
 token.txt
 *.token
+node_modules/
+dist/
+wrappers/*/target/
+wrappers/*/out/
+wrappers/android/.gradle/
+wrappers/android/app/build/
+wrappers/android/release.keystore
