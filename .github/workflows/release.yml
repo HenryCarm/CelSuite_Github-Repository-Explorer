@@ -1,0 +1,30 @@
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pack portable artifacts
+        run: |
+          mkdir -p dist
+          cp app/index.html "dist/CelSuite-RepoExplorer-${GITHUB_REF_NAME}.html"
+          cd app && zip -r "../dist/CelSuite-RepoExplorer-${GITHUB_REF_NAME}-Portable.zip" . && cd ..
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "CelSuite GitHub Repository Explorer ${{ github.ref_name }}"
+          body_path: RELEASE_NOTES.md
+          files: dist/*
+          draft: false
+          prerelease: false

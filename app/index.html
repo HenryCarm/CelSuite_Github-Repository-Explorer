@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en" data-anim="on">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CelSuite — GitHub Repo Explorer v269.26.2</title>
+<link rel="icon" type="image/webp" href="icon.webp">
+<style>
+:root{--bg:#202020;--panel:#2b2b2b;--content:#191919;--border:#3a3a3a;--border2:#454545;--text:#f5f5f5;--sub:#a8a8a8;--hover:#2d2d2d;--select:#263d55;--select-border:#3b5a7a;--accent:#4cc2ff;--accent-h:#66cdff;--accent-text:#003a5c;--danger:#ff6b5e;--ok:#6ccb5f;--menu:#2b2b2b;--shadow:0 8px 24px rgba(0,0,0,.5);--fold:#e8b954;--fold2:#a97e2f;--zoom:104px;
+--panel-a:color-mix(in srgb,var(--panel) 90%,transparent);--content-a:color-mix(in srgb,var(--content) 86%,transparent);--glassblur:0px}
+[data-theme="light"]{--bg:#f3f3f3;--panel:#fbfbfb;--content:#fff;--border:#e5e5e5;--border2:#d6d6d6;--text:#1b1b1b;--sub:#5c5c5c;--hover:#f4f4f4;--select:#e9f2fc;--select-border:#cfe3f8;--accent:#0067c0;--accent-h:#1a75c9;--accent-text:#fff;--danger:#c42b1c;--ok:#0f7b0f;--menu:#fbfbfb;--shadow:0 8px 24px rgba(0,0,0,.14);--fold:#f9d77e;--fold2:#d9a441}
+[data-theme="oled"]{--bg:#000;--panel:#000;--content:#000;--border:#111;--border2:#1c1c1c;--text:#fff;--sub:#8a8a8a;--hover:#0a0a0a;--select:#001a33;--select-border:#0055aa;--accent:#00aaff;--accent-h:#33ccff;--accent-text:#001a33;--danger:#ff4444;--ok:#44dd44;--menu:#000;--shadow:0 8px 24px rgba(0,0,0,.9);--fold:#8a6a1a;--fold2:#5a4410}
+[data-theme="red"]{--bg:#1a0505;--panel:#2a0b0b;--content:#140202;--border:#4a1515;--border2:#5a1f1f;--text:#ffe5e5;--sub:#d09090;--hover:#3a0f0f;--select:#551a1a;--select-border:#8a2a2a;--accent:#ff4d4d;--accent-h:#ff6666;--accent-text:#fff;--danger:#ff8080;--ok:#6ccb5f;--menu:#2a0b0b;--shadow:0 8px 24px rgba(255,0,0,.2);--fold:#e8b954;--fold2:#a97e2f}
+[data-theme="matrix"]{--bg:#000;--panel:#051005;--content:#000a00;--border:#003300;--border2:#004400;--text:#00ff00;--sub:#00aa00;--hover:#001a00;--select:#003300;--select-border:#00ff00;--accent:#00ff00;--accent-h:#33ff33;--accent-text:#000;--danger:#ff3333;--ok:#00ff00;--menu:#051005;--shadow:0 8px 24px rgba(0,255,0,.2);--fold:#00aa00;--fold2:#005500}
+[data-theme="sunset"]{--bg:#1a0f05;--panel:#241608;--content:#1c1006;--border:#4a2c12;--border2:#5a3818;--text:#ffe8d0;--sub:#cfa080;--hover:#2e1c0c;--select:#4a2a10;--select-border:#8a5520;--accent:#ff9f43;--accent-h:#ffb668;--accent-text:#331a00;--danger:#ff6b5e;--ok:#6ccb5f;--menu:#241608;--shadow:0 8px 24px rgba(255,140,0,.18);--fold:#e8b954;--fold2:#a97e2f}
+[data-theme="ocean"]{--bg:#041420;--panel:#07202f;--content:#03101a;--border:#123a4d;--border2:#1a4a60;--text:#dff6ff;--sub:#8ab8cc;--hover:#0a2a3c;--select:#0a3a52;--select-border:#1a6a8a;--accent:#22d3ee;--accent-h:#55e0f5;--accent-text:#002a33;--danger:#ff6b5e;--ok:#6ccb5f;--menu:#07202f;--shadow:0 8px 24px rgba(0,180,255,.18);--fold:#e8b954;--fold2:#a97e2f}
+[data-theme="violet"]{--bg:#12081f;--panel:#1a0f2e;--content:#0e0618;--border:#3a2058;--border2:#4a2a6a;--text:#f0e6ff;--sub:#b098cc;--hover:#241640;--select:#331a55;--select-border:#6a3aaa;--accent:#a78bfa;--accent-h:#bba4ff;--accent-text:#1a0033;--danger:#ff6b5e;--ok:#6ccb5f;--menu:#1a0f2e;--shadow:0 8px 24px rgba(150,80,255,.2);--fold:#e8b954;--fold2:#a97e2f}
+[data-theme="forest"]{--bg:#06140c;--panel:#0a2013;--content:#04100a;--border:#1a4a2c;--border2:#245a38;--text:#e0ffe8;--sub:#8cc8a0;--hover:#0e2a18;--select:#14402a;--select-border:#2a7a4a;--accent:#34d399;--accent-h:#5ce0b0;--accent-text:#002a1a;--danger:#ff6b5e;--ok:#6ccb5f;--menu:#0a2013;--shadow:0 8px 24px rgba(0,255,140,.16);--fold:#e8b954;--fold2:#a97e2f}
+/* ---- Liquid Glass: translucent chrome + blur + sheen (panes stay blur-free for perf) ---- */
+[data-glass="on"]{--panel-a:color-mix(in srgb,var(--panel) 52%,transparent);--content-a:color-mix(in srgb,var(--content) 44%,transparent);--glassblur:18px}
+[data-glass="on"] .titlebar::after,[data-glass="on"] .dialog .dh::after,[data-glass="on"] .tabstrip::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.07) 46%,rgba(255,255,255,.13) 50%,rgba(255,255,255,.07) 54%,transparent 70%) 0 0/250% 100% no-repeat;animation:sheen 7s ease-in-out infinite}
+[data-glass="on"] .titlebar,[data-glass="on"] .dialog .dh,[data-glass="on"] .tabstrip{position:relative}
+@keyframes sheen{0%,100%{background-position:120% 0}50%{background-position:-40% 0}}
+/* ---- animations (kill-switchable) ---- */
+[data-anim="on"] .dialog{animation:pop .22s cubic-bezier(.2,1.4,.4,1)}
+[data-anim="on"] #ctx{animation:pop .15s ease}
+[data-anim="on"] .pane{animation:panein .28s ease}
+[data-anim="on"] .btn:active,[data-anim="on"] .ibtn:active{transform:scale(.94)}
+[data-anim="on"] .tile,[data-anim="on"] .drow{transition:background .12s,transform .12s}
+[data-anim="on"] .tile:hover{transform:translateY(-2px)}
+[data-anim="on"] .tab,[data-anim="on"] .sideItem{transition:background .13s,transform .13s}
+[data-anim="on"] .sideItem:hover{transform:translateX(2px)}
+@keyframes pop{from{transform:scale(.94);opacity:0}}
+@keyframes panein{from{opacity:0;transform:translateY(10px)}}
+[data-anim="off"] *{animation:none!important;transition:none!important}
+*{box-sizing:border-box;margin:0;padding:0;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+body{font-family:"Segoe UI Variable Text","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:13px;height:100vh;overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+input,select,textarea{font:inherit;color:var(--text)}
+svg{display:block;flex:none}.hidden{display:none!important}
+#appbg{position:fixed;inset:0;z-index:0;background-size:cover;background-position:center;filter:saturate(1.05)}
+#appbgTint{position:fixed;inset:0;z-index:0;background:#000;opacity:.35;pointer-events:none}
+#app,.center-wrap{position:relative;z-index:1}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:4px;border:1px solid var(--border2);background:var(--panel-a)}
+.btn:hover{background:var(--hover)}.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-text)}
+.btn.primary:hover{background:var(--accent-h)}.btn.danger{color:var(--danger)}.btn:disabled{opacity:.45;cursor:default}
+.ibtn{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:4px}
+.ibtn:hover{background:var(--hover)}.ibtn:disabled{opacity:.35;cursor:default}.ibtn.active{color:var(--accent)}
+.tin{padding:7px 10px;border:1px solid var(--border2);border-radius:4px;background:var(--content-a);outline:none;backdrop-filter:blur(6px)}
+.tin:focus{border-color:var(--accent)}
+.badge{font-size:10.5px;padding:1px 7px;border-radius:99px;border:1px solid var(--border2);color:var(--sub);flex:none}
+.badge.ro{color:var(--danger);border-color:var(--danger)}.badge.cache{color:var(--ok);border-color:var(--ok)}
+.center-wrap{height:100vh;display:flex;align-items:center;justify-content:center;overflow:auto}
+.card{width:440px;max-width:92vw;background:var(--content-a);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow);padding:28px;backdrop-filter:blur(16px) saturate(1.3)}
+.card h1{font-size:20px;font-weight:600;margin:10px 0 4px}.card p.sub{color:var(--sub);margin-bottom:18px;line-height:1.5}
+.card .row{display:flex;gap:8px;margin-top:10px;align-items:center}
+.card label.chk{display:flex;gap:7px;align-items:center;color:var(--sub);margin-top:12px;cursor:pointer}
+.err{color:var(--danger);margin-top:10px;min-height:16px;word-break:break-word}
+.tokwrap{position:relative}.tokwrap .tin{width:100%;padding-right:38px}.tokwrap .ibtn{position:absolute;right:2px;top:1px;width:32px;height:32px}
+a{color:var(--accent)}
+#favRow{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}#favRow .btn{font-size:11.5px;padding:4px 10px}
+#repoList{max-height:240px;overflow:auto;border:1px solid var(--border);border-radius:6px;margin-top:10px;background:var(--content-a)}
+.repoRow{display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;border-bottom:1px solid var(--border)}
+.repoRow:last-child{border-bottom:none}.repoRow:hover{background:var(--hover)}
+.repoRow.sel{background:var(--select);outline:1px solid var(--select-border)}
+.repoRow .nm{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.repoRow .mt{color:var(--sub);font-size:11.5px;margin-left:auto;white-space:nowrap;flex:none}
+.userline{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.userline img{width:38px;height:38px;border-radius:50%}.userline .grow{flex:1}
+#app{height:100vh;display:flex;flex-direction:column}
+.titlebar{height:40px;display:flex;align-items:center;gap:8px;padding:0 10px;background:var(--panel-a);border-bottom:1px solid var(--border);backdrop-filter:blur(var(--glassblur)) saturate(1.3)}
+.titlebar .ttl{font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.titlebar .spacer{flex:1}.titlebar img{width:22px;height:22px;border-radius:6px}
+.userchip{display:flex;align-items:center;gap:7px;color:var(--sub);font-size:12px}
+.userchip img{width:22px;height:22px;border-radius:50%}
+.cmdbar{display:flex;align-items:center;gap:2px;padding:5px 8px;background:var(--panel-a);border-bottom:1px solid var(--border);flex-wrap:wrap;backdrop-filter:blur(var(--glassblur)) saturate(1.3)}
+.cmdbar .sep{width:1px;height:22px;background:var(--border2);margin:0 5px}.cmdbar .grow{flex:1}
+#filterInput{width:130px}
+.tabstrip{display:flex;align-items:center;gap:2px;padding:4px 8px 0;background:var(--panel-a);border-bottom:1px solid var(--border);overflow-x:auto;backdrop-filter:blur(var(--glassblur))}
+.tab{display:flex;align-items:center;gap:7px;padding:6px 12px;border:1px solid var(--border);border-bottom:none;border-radius:6px 6px 0 0;background:var(--content-a);color:var(--sub);font-size:12px;white-space:nowrap;cursor:pointer}
+.tab.active{color:var(--text);border-color:var(--accent);box-shadow:inset 0 2px 0 var(--accent)}
+.tab .x{width:16px;height:16px;border-radius:4px;display:flex;align-items:center;justify-content:center}
+.tab .x:hover{background:var(--danger);color:#fff}
+.pcrumbs{display:flex;align-items:center;gap:2px;height:32px;padding:0 10px;background:var(--content-a);border-bottom:1px solid var(--border);overflow:hidden;white-space:nowrap;font-size:12px}
+.crumb{display:inline-flex;align-items:center;gap:5px;padding:3px 7px;border-radius:4px;cursor:pointer}
+.crumb:hover{background:var(--hover)}.crumb.chev{cursor:default;color:var(--sub)}
+.mainrow{flex:1;display:flex;min-height:0;position:relative}
+.sidebar{width:206px;background:var(--panel-a);border-right:1px solid var(--border);padding:8px 6px;overflow:auto;z-index:20;backdrop-filter:blur(var(--glassblur)) saturate(1.3)}
+.side-he{font-size:11px;color:var(--sub);padding:6px 10px 4px;text-transform:uppercase;letter-spacing:.4px;cursor:pointer;display:flex;justify-content:space-between}
+.sideItem{display:flex;align-items:center;gap:8px;width:100%;padding:5px 10px;border-radius:4px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}
+.sideItem:hover{background:var(--hover)}.sideItem.active{background:var(--select)}
+.sideCard{margin:10px 8px;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--content-a);color:var(--sub);font-size:11px;line-height:1.7;word-break:break-all}
+.panewrap{flex:1;display:flex;min-width:0}
+.panewrap.split-h{flex-direction:column}
+.paneview{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0;border-right:1px solid var(--border);position:relative}
+.panewrap.split-h .paneview{border-right:none;border-bottom:1px solid var(--border)}
+.paneview:last-child{border-right:none;border-bottom:none}
+.paneview.active::after{content:"";position:absolute;inset:0;border:1px solid var(--select-border);pointer-events:none;z-index:5}
+.pane{flex:1;overflow:auto;padding:8px;position:relative;touch-action:pan-y;background:var(--content-a)}
+.pane.dropping{outline:2px dashed var(--accent);outline-offset:-6px}
+.grid{display:flex;flex-wrap:wrap;gap:4px;align-content:flex-start}
+.tile{width:var(--zoom);padding:8px 4px 6px;border-radius:4px;display:flex;flex-direction:column;align-items:center;gap:6px;border:1px solid transparent;position:relative}
+.tile:hover{background:var(--hover)}.tile.sel{background:var(--select);border-color:var(--select-border)}
+.tile .lbl{font-size:12px;text-align:center;line-height:1.3;max-height:2.6em;overflow:hidden;word-break:break-word;width:100%}
+.tile.dragover,.drow.dragover{outline:2px solid var(--accent);background:var(--select)}
+.thumb{width:60px;height:60px;object-fit:cover;border-radius:6px;border:1px solid var(--border2);background:var(--bg) center/22px no-repeat}
+.thumb:not(.loaded){opacity:.35}
+.dhead,.drow{display:flex;align-items:center;gap:8px;padding:0 8px;height:28px;border-radius:4px;font-size:12px}
+.dhead{color:var(--sub);position:sticky;top:0;background:color-mix(in srgb,var(--content) 82%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--border);border-radius:0;height:30px;z-index:2}
+.drow:hover{background:var(--hover)}.drow.sel{background:var(--select);outline:1px solid var(--select-border)}
+.c-name{flex:1;display:flex;align-items:center;gap:8px;min-width:0}.c-name span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.c-size{width:80px;text-align:right;color:var(--sub)}.c-type{width:110px;color:var(--sub);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.statusbar{height:26px;display:flex;align-items:center;gap:12px;padding:0 10px;background:var(--panel-a);border-top:1px solid var(--border);color:var(--sub);font-size:11.5px;backdrop-filter:blur(var(--glassblur))}
+.statusbar .grow{flex:1}
+.empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--sub);flex-direction:column;gap:8px;pointer-events:none}
+.marquee{position:absolute;border:1px solid var(--accent);background:rgba(76,194,255,.15);z-index:10;pointer-events:none}
+.dragghost{position:fixed;left:-9999px;top:-9999px;width:64px;height:64px;z-index:300;pointer-events:none}
+.dragghost .gc{position:absolute;inset:0;background:var(--panel);border:1px solid var(--border2);border-radius:10px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+.dragghost .gcount{position:absolute;right:-10px;top:-10px;background:var(--accent);color:var(--accent-text);border-radius:99px;font-size:11px;padding:2px 8px;font-weight:700;z-index:9}
+#ctx{position:fixed;z-index:90;min-width:210px;background:var(--menu);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow);padding:4px;display:none}
+[data-glass="on"] #ctx{background:var(--panel-a);backdrop-filter:blur(18px)}
+#ctx .ci{display:flex;align-items:center;gap:10px;width:100%;padding:7px 12px;border-radius:4px;text-align:left}
+#ctx .ci:hover{background:var(--hover)}#ctx .ci.danger{color:var(--danger)}#ctx .ci:disabled{opacity:.4;cursor:default}
+#ctx .csep{height:1px;background:var(--border);margin:4px 6px}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:100}
+.dialog{width:500px;max-width:94vw;max-height:86vh;display:flex;flex-direction:column;background:var(--content);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow);overflow:hidden}
+[data-glass="on"] .dialog{background:var(--content-a);backdrop-filter:blur(22px) saturate(1.4)}
+.dialog.wide{width:800px}.dialog .dh{padding:14px 18px 10px;font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px}
+.dialog .db{padding:4px 18px 16px;overflow:auto;flex:1;display:flex;flex-direction:column}
+.dialog .df{padding:12px 18px;display:flex;justify-content:flex-end;gap:8px;border-top:1px solid var(--border)}
+.dialog .tin{width:100%}
+#editArea{flex:1;width:100%;min-height:300px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:12px;font-family:Consolas,monospace;font-size:13px;resize:none;user-select:text;-webkit-user-select:text}
+#pvBody{display:flex;align-items:center;justify-content:center;min-height:120px;overflow:auto}
+#pvBody img{max-width:100%;max-height:52vh;border-radius:4px}
+#pvBody pre{width:100%;max-height:52vh;overflow:auto;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px;font-family:Consolas,monospace;font-size:12px;white-space:pre-wrap;word-break:break-word;user-select:text}
+#pvBody .svglive{width:100%;display:flex;align-items:center;justify-content:center}
+#pvBody .svglive svg{max-width:100%;max-height:52vh}
+.pvMeta{color:var(--sub);margin-top:10px;font-size:11.5px;line-height:1.7;word-break:break-all}
+.fontspec{text-align:center;padding:10px 0}.fontspec .l1{font-size:44px}.fontspec .l2{font-size:22px;margin-top:6px}.fontspec .l3{font-size:14px;margin-top:8px;color:var(--sub)}
+#progList,#logsList{font-family:Consolas,monospace;font-size:12px;line-height:1.7;overflow:auto;user-select:text}
+#progList .ok{color:var(--ok)}#progList .bad{color:var(--danger)}#progList .run{color:var(--accent)}
+.log-item{padding:8px;border-bottom:1px solid var(--border)}.log-item.err{color:var(--danger)}.log-item.ok{color:var(--ok)}
+.log-time{color:var(--sub);font-size:10px;margin-right:8px}
+.pip{position:fixed;bottom:20px;right:20px;width:280px;background:var(--panel-a);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow);padding:12px;z-index:95;font-size:12px;backdrop-filter:blur(14px)}
+#toasts{position:fixed;right:14px;bottom:80px;z-index:120;display:flex;flex-direction:column;gap:8px;max-width:340px}
+.toast{background:var(--menu);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:6px;box-shadow:var(--shadow);padding:10px 14px;font-size:12.5px;line-height:1.45;animation:tin .18s ease}
+.toast.err{border-left-color:var(--danger)}.toast.ok{border-left-color:var(--ok)}
+@keyframes tin{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
+.setrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:12.5px}
+.setrow .grow{flex:1}.setrow .desc{color:var(--sub);font-size:11px;margin-top:2px}
+.switch{position:relative;width:40px;height:22px;flex:none}
+.switch input{opacity:0;width:0;height:0}
+.switch .sl{position:absolute;inset:0;background:var(--border2);border-radius:99px;transition:.15s}
+.switch .sl::before{content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:var(--text);transition:.15s}
+.switch input:checked+.sl{background:var(--accent)}
+.switch input:checked+.sl::before{transform:translateX(18px)}
+.kbd{font-family:Consolas,monospace;background:var(--panel);border:1px solid var(--border2);border-bottom-width:2px;border-radius:4px;padding:1px 6px;font-size:11px}
+@media (max-width:768px){.sidebar{position:fixed;top:0;left:0;bottom:0;transform:translateX(-100%);box-shadow:var(--shadow)}.sidebar.open{transform:translateX(0)}.mobile-menu-btn{display:inline-flex!important}.userchip span{display:none}.panewrap.split-v{flex-direction:column}.pip{width:calc(100% - 28px);left:14px;right:14px;bottom:14px}}
+@media (max-width:640px){.cmdbar .btn .bl{display:none}.cmdbar .btn{padding:9px 11px}.ibtn{width:40px;height:40px}#filterInput{width:100%;order:9;margin-top:4px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:2px}.tile{width:auto}.thumb{width:52px;height:52px}.c-type{display:none}.c-size{width:60px}.titlebar .ttl{font-size:11px}.statusbar{font-size:10.5px;gap:8px}.card{padding:20px}}
+.mobile-menu-btn{display:none}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;border:2px solid transparent;background-clip:content-box}
+</style>
+</head>
+<body>
+<div id="appbg" class="hidden"></div><div id="appbgTint" class="hidden"></div>
+
+<div id="screenAuth" class="center-wrap">
+  <form class="card" id="loginForm" method="post" action="#" autocomplete="on">
+    <img id="authIcon" src="icon.webp" alt="" style="width:46px;height:46px;border-radius:12px" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <svg width="44" height="44" viewBox="0 0 24 24" style="display:none"><path d="M7 18a5 5 0 0 1-.7-9.95 6.5 6.5 0 0 1 12.55 1.6A4.5 4.5 0 0 1 17.5 18Z" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 11v6m0 0-2.4-2.4M12 17l2.4-2.4" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <h1>GitHub Repo Explorer</h1>
+    <p class="sub">Sign in with <b>your own</b> GitHub account. Your browser can fill & save this like any normal login. Token is encrypted locally and sent <b>only</b> to <code>api.github.com</code>.</p>
+    <input id="userInput" class="tin" style="width:100%" name="username" type="text" placeholder="GitHub username" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+    <div class="tokwrap" style="margin-top:8px">
+      <input id="tokInput" class="tin" name="password" type="password" placeholder="Personal Access Token (password)" autocomplete="current-password" spellcheck="false" required>
+      <button type="button" class="ibtn" id="tokEye" title="Show / hide"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/></svg></button>
+    </div>
+    <label class="chk"><input type="checkbox" id="tokRemember" checked> Encrypt & remember me on this device</label>
+    <div class="row"><button class="btn primary" id="btnConnect" type="submit" style="flex:1;justify-content:center">Sign in</button></div>
+    <div class="err" id="authErr"></div>
+  </form>
+</div>
+
+<div id="screenRepo" class="center-wrap hidden">
+  <div class="card" style="width:560px">
+    <div class="userline"><img id="rpAvatar" alt=""><div class="grow"><div style="font-weight:600" id="rpName"></div><div style="color:var(--sub);font-size:11.5px">Signed in — pick a repository</div></div>
+      <button class="ibtn" id="btnBackToAuth" title="Sign out"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M15 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4M10 8l-4 4 4 4M6 12h10"/></svg></button></div>
+    <div id="favRow"></div>
+    <input id="repoSearch" class="tin" style="width:100%;margin-top:8px" placeholder="🔎 Filter repositories…">
+    <div id="repoList"></div>
+    <div class="row"><select id="branchSelect" class="tin" style="flex:1" disabled></select><button class="btn primary" id="btnOpenRepo" disabled>Open</button></div>
+    <div class="row"><button class="btn" id="btnNewRepo" style="flex:1;justify-content:center">＋ New Repo</button><button class="btn" id="btnToggleOther" style="flex:1;justify-content:center">Open other…</button></div>
+    <div class="row hidden" id="otherRow"><input id="otherRepoInput" class="tin" style="flex:1" placeholder="owner/repo (public or yours)"><button class="btn" id="btnOpenOther">Go</button></div>
+    <div class="row hidden" id="cancelRow"><button class="btn" id="btnCancelPicker" style="flex:1;justify-content:center">← Back to open tabs</button></div>
+    <div class="err" id="repoErr"></div>
+  </div>
+</div>
+
+<div id="loadingOverlay" class="overlay hidden"><div class="dialog" style="width:300px;text-align:center;padding:30px"><div id="loadingText" style="font-size:16px;font-weight:600">Loading...</div></div></div>
+
+<div id="app" class="hidden">
+  <div class="titlebar">
+    <button class="ibtn mobile-menu-btn" id="btnMobileMenu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <img id="appIconImg" src="icon.webp" alt="" onerror="this.style.display='none'">
+    <span class="ttl">Repo Explorer</span>
+    <span class="badge ro hidden" id="roBadge">READ ONLY</span>
+    <span class="badge cache hidden" id="cacheBadge">CACHED</span>
+    <span class="spacer"></span>
+    <button class="ibtn" id="btnCache" title="Cache this repo for instant opens & offline previews. Cached repos only refresh when you hit Retry/Refresh. Manage in Settings → Cache."><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h6l-1 8 9-12h-6Z"/></svg></button>
+    <button class="ibtn" id="btnFav" title="Add / remove this repo from favourites"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>
+    <button class="ibtn" id="btnGithubTab" title="Open in GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M14 4h6v6M20 4 10 14M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"/></svg></button>
+    <select id="themeSelect" class="tin" style="padding:4px 6px;font-size:12px">
+      <option value="dark">Dark</option><option value="oled">OLED Dark</option><option value="light">Light</option>
+      <option value="red">CelSuite Red</option><option value="sunset">Sunset Amber</option><option value="ocean">Ocean</option>
+      <option value="violet">Violet</option><option value="forest">Forest</option><option value="matrix">Matrix</option>
+    </select>
+    <button class="btn" id="btnSettings" style="font-size:12px">Settings</button>
+    <button class="btn" id="btnLogs" style="font-size:12px">Logs</button>
+    <span class="userchip"><img id="tbAvatar" alt=""><span id="tbLogin"></span></span>
+    <button class="ibtn" id="btnSignOut" title="Sign out"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M15 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4M10 8l-4 4 4 4M6 12h10"/></svg></button>
+  </div>
+  <div class="cmdbar">
+    <button class="ibtn" id="btnBack" title="Back (Alt+Left)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg></button>
+    <button class="ibtn" id="btnFwd" title="Forward (Alt+Right)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+    <button class="ibtn" id="btnUp" title="Up (Backspace)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></button>
+    <span class="sep"></span>
+    <button class="btn" id="btnNewFolder"><span class="bl">New folder</span></button>
+    <button class="btn" id="btnUpload"><span class="bl">Upload</span></button>
+    <span class="sep"></span>
+    <button class="btn" id="btnCopy"><span class="bl">Copy</span></button>
+    <button class="btn" id="btnCut"><span class="bl">Cut</span></button>
+    <button class="btn" id="btnPaste"><span class="bl">Paste</span></button>
+    <span class="sep"></span>
+    <button class="btn" id="btnRename"><span class="bl">Rename</span></button>
+    <button class="btn danger" id="btnDelete"><span class="bl">Delete</span></button>
+    <button class="btn" id="btnDownload"><span class="bl">Download</span></button>
+    <span class="sep"></span>
+    <button class="ibtn" id="btnRefresh" title="Retry / refresh — the ONLY way to pull latest when caching is on (F5)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 6.3M20 5v6h-6"/></svg></button>
+    <button class="ibtn" id="btnSplit" title="Split vertical (F3)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16"/></svg></button>
+    <button class="ibtn" id="btnSplitH" title="Split horizontal (F4)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 12h18"/></svg></button>
+    <button class="ibtn" id="btnSearch" title="Search whole repo (Ctrl+Shift+F)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="6"/><path d="m20 20-4-4"/></svg></button>
+    <span class="grow"></span>
+    <select id="sortSel" class="tin" title="Sort" style="font-size:11.5px;padding:4px 6px"><option value="name">Name</option><option value="size">Size</option><option value="type">Type</option></select>
+    <button class="ibtn active" id="viewIcons" title="Icons"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg></button>
+    <button class="ibtn" id="viewDetails" title="Details"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <span class="sep"></span>
+    <select id="branchSel" class="tin" title="Branch" style="font-size:12px"></select>
+    <input id="filterInput" class="tin" placeholder="Filter...">
+  </div>
+  <div class="tabstrip" id="tabstrip"></div>
+  <div class="mainrow">
+    <div class="sidebar" id="sidebar">
+      <div class="side-he" id="heQuick">Quick access <span>▾</span></div><div id="sideQuick"></div>
+      <div class="side-he" id="heRecent">Recent <span>▾</span></div><div id="sideRecent"></div>
+      <div class="side-he" id="heBm">Bookmarks ⭐ <span>▾</span></div><div id="sideBm"></div>
+      <div class="sideCard" id="sideCard"></div>
+    </div>
+    <div class="panewrap" id="panewrap"></div>
+  </div>
+  <div class="statusbar"><span id="statItems"></span><span id="statSel"></span><span class="grow"></span><span id="statRate"></span><span id="statProg"></span><span id="statCommit"></span></div>
+</div>
+
+<div id="ctx"></div>
+<div class="overlay hidden" id="modalPreview"><div class="dialog wide">
+  <div class="dh"><span id="pvTitle" style="flex:1"></span><button class="ibtn" id="pvRaw" title="Open raw" style="width:24px;height:24px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M14 4h6v6M20 4 10 14"/></svg></button></div>
+  <div class="db"><div id="pvBody"></div><div class="pvMeta" id="pvMeta"></div></div>
+  <div class="df"><button class="btn" id="pvEdit">Edit Text</button><button class="btn" id="pvDownload">Download</button><button class="btn primary" id="pvClose">Close</button></div>
+</div></div>
+<div class="overlay hidden" id="modalEdit"><div class="dialog wide">
+  <div class="dh"><span id="editTitle"></span></div>
+  <div class="db"><textarea id="editArea"></textarea></div>
+  <div class="df"><button class="btn" id="editCancel">Cancel</button><button class="btn primary" id="editSave">Commit Changes</button></div>
+</div></div>
+<div class="overlay hidden" id="modalInput"><div class="dialog" style="width:400px">
+  <div class="dh"><span id="inpTitle"></span></div>
+  <div class="db"><input class="tin" id="inpField" autocomplete="off" spellcheck="false"></div>
+  <div class="df"><button class="btn" id="inpCancel">Cancel</button><button class="btn primary" id="inpOk">OK</button></div>
+</div></div>
+<div class="overlay hidden" id="modalConfirm"><div class="dialog" style="width:440px">
+  <div class="dh"><span id="cfTitle"></span></div>
+  <div class="db"><div id="cfMsg" style="line-height:1.6;word-break:break-word"></div></div>
+  <div class="df"><button class="btn hidden" id="cfAlt"></button><button class="btn" id="cfCancel">Cancel</button><button class="btn primary" id="cfOk">OK</button></div>
+</div></div>
+<div class="overlay hidden" id="modalNewRepo"><div class="dialog" style="width:420px">
+  <div class="dh">Create a new repository</div>
+  <div class="db"><input class="tin" id="nrName" placeholder="Repository name *" autocomplete="off" spellcheck="false"><input class="tin" id="nrDesc" placeholder="Description (optional)" style="margin-top:8px" autocomplete="off">
+    <label class="chk" style="margin-top:12px"><input type="checkbox" id="nrPrivate"> Private</label><label class="chk"><input type="checkbox" id="nrInit" checked> Auto-init with README</label></div>
+  <div class="df"><button class="btn" id="nrCancel">Cancel</button><button class="btn primary" id="nrCreate">Create</button></div>
+</div></div>
+<div class="overlay hidden" id="modalSettings"><div class="dialog" style="width:520px">
+  <div class="dh"><span style="flex:1">Settings</span><button class="btn" id="setClose" style="font-size:11px;padding:4px 8px">Close</button></div>
+  <div class="db">
+    <div class="setrow"><div class="grow"><b>Cache everything</b><div class="desc">Trees, previews & thumbs load instantly from a local cloud. Cached repos only update on Retry/Refresh. Commits update the cache automatically.</div></div><label class="switch"><input type="checkbox" id="setCache"><span class="sl"></span></label></div>
+    <div class="setrow"><div class="grow"><b>Always-cached repos</b><div class="desc">Stay cached even if global cache is off. Use the ⚡ toggle (top-right) to add/remove the current repo.</div></div></div>
+    <div id="setCacheList" style="max-height:110px;overflow:auto;font-size:12px"></div>
+    <div class="setrow"><div class="grow"><b>Recent history rail</b></div><label class="switch"><input type="checkbox" id="setRecents"><span class="sl"></span></label></div>
+    <div class="setrow"><div class="grow"><b>Liquid Glass 💎</b><div class="desc">Translucent blurred chrome + animated sheen. Pairs beautifully with the wallpaper.</div></div><label class="switch"><input type="checkbox" id="setGlass"><span class="sl"></span></label></div>
+    <div class="setrow"><div class="grow"><b>UI animations ✨</b><div class="desc">Pops, slides & hover lifts. Disable for maximum speed on weak hardware.</div></div><label class="switch"><input type="checkbox" id="setAnim"><span class="sl"></span></label></div>
+    <div class="setrow"><div class="grow"><b>Wallpaper</b><div class="desc">Background image behind every theme (wallpaper.webp by default).</div></div><label class="switch"><input type="checkbox" id="setWall"><span class="sl"></span></label></div>
+    <div class="setrow"><div class="grow"><b>Wallpaper tint</b><div class="desc">Dark overlay strength over the wallpaper.</div></div><input type="range" id="setTint" min="0" max="80" style="width:140px"></div>
+    <div class="setrow"><div class="grow"><b>Wallpaper image</b></div><button class="btn" id="setWallChange" style="font-size:11px;padding:4px 8px">Change</button><button class="btn" id="setWallReset" style="font-size:11px;padding:4px 8px">Reset</button></div>
+    <div class="setrow"><div class="grow"><b>Lock landscape (mobile)</b></div><label class="switch"><input type="checkbox" id="setLandscape"><span class="sl"></span></label></div>
+    <div class="setrow"><div class="grow"><b>Icon zoom</b></div><input type="range" id="setZoom" min="76" max="160" step="4" style="width:140px"></div>
+    <div class="setrow"><div class="grow"><b>About & credits</b></div><button class="btn" id="setAbout" style="font-size:11px;padding:4px 8px">Open</button></div>
+  </div>
+</div></div>
+<div class="overlay hidden" id="modalAbout"><div class="dialog" style="width:480px">
+  <div class="dh">About — GitHub Repo Explorer</div>
+  <div class="db" style="line-height:1.75;font-size:13px">
+    <p><b>GitHub Repo Explorer</b> · Version <b>269.26.2</b></p>
+    <p style="margin-top:8px;color:var(--sub)">A browser-native repository workspace built on the GitHub Git Data API. Single-file, zero-dependency architecture: atomic blob→tree→commit→ref transactions, encrypted local credential storage, an IndexedDB content-addressed cache, tabbed multi-pane navigation, and a full preview pipeline (image, animated SVG, audio, video, font specimens, text editing).</p>
+    <p style="margin-top:10px"><b>Author & maintainer:</b> Henry Jayz (HenryCarm) — solo developer. Architecture, design and implementation.</p>
+    <p style="margin-top:6px"><b>Co-development:</b> produced in collaboration with an AI engineering partner (Qwen), credited by request.</p>
+    <p style="margin-top:10px;color:var(--sub)">Part of the CelSuite software family. © 2026 HenryJayz. Proprietary — all rights reserved. Unauthorized redistribution of source or binary forms is prohibited.</p>
+  </div>
+  <div class="df"><button class="btn primary" id="aboutClose">Close</button></div>
+</div></div>
+<div class="overlay hidden" id="modalSearch"><div class="dialog" style="width:560px">
+  <div class="dh"><span style="flex:1">Search whole repo</span></div>
+  <div class="db"><input class="tin" id="searchField" placeholder="Type to search every path…"><div id="searchResults" style="margin-top:10px;overflow:auto;max-height:320px"></div></div>
+  <div class="df"><button class="btn" id="searchClose">Close</button></div>
+</div></div>
+<div class="overlay hidden" id="modalProps"><div class="dialog" style="width:420px">
+  <div class="dh"><span id="propsTitle">Properties</span></div>
+  <div class="db" id="propsBody" style="line-height:1.8;font-size:12.5px;word-break:break-all"></div>
+  <div class="df"><button class="btn primary" id="propsClose">Close</button></div>
+</div></div>
+<div class="overlay hidden" id="modalHelp"><div class="dialog" style="width:460px">
+  <div class="dh"><span style="flex:1">Keyboard shortcuts</span></div>
+  <div class="db" style="line-height:2;font-size:12.5px">
+    <span class="kbd">F1</span> help · <span class="kbd">F3</span>/<span class="kbd">F4</span> split v/h · <span class="kbd">F5</span> retry/refresh<br>
+    <span class="kbd">Ctrl+T</span> new tab · <span class="kbd">Ctrl+W</span> close tab (if browser allows; the ✕ always works) · <span class="kbd">Ctrl+Shift+F</span> search<br>
+    <span class="kbd">Ctrl+C/X/V</span> copy/cut/paste · <span class="kbd">Ctrl+A</span> select all · <span class="kbd">F2</span> rename · <span class="kbd">Del</span> delete<br>
+    <span class="kbd">Alt+Enter</span> properties · <span class="kbd">Enter</span> open · <span class="kbd">Backspace</span> up · <span class="kbd">Alt+←/→</span> history<br>
+    <span class="kbd">Long-press</span> touch select + hold-drag · <span class="kbd">Drag on empty space</span> marquee select
+  </div>
+  <div class="df"><button class="btn primary" id="helpClose">Close</button></div>
+</div></div>
+<div class="overlay hidden" id="progress"><div class="dialog" style="width:520px">
+  <div class="dh"><span id="progTitle" style="flex:1">Working…</span><button class="ibtn" id="progMin" style="width:24px;height:24px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg></button></div>
+  <div class="db"><div id="progList"></div></div>
+</div></div>
+<div class="overlay hidden" id="modalLogs"><div class="dialog wide">
+  <div class="dh"><span style="flex:1">System Logs</span><button class="btn danger" id="logsClear" style="font-size:11px;padding:4px 8px">Clear</button><button class="btn" id="logsClose" style="font-size:11px;padding:4px 8px">Close</button></div>
+  <div class="db"><div id="logsList"></div></div>
+</div></div>
+<div class="pip hidden" id="pip"><div style="display:flex;justify-content:space-between;font-weight:600;margin-bottom:6px"><span id="pipTitle"></span><button class="ibtn" id="pipClose" style="width:20px;height:20px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div><div id="pipLog" style="font-family:Consolas,monospace;font-size:11px;max-height:80px;overflow:auto;color:var(--sub)"></div></div>
+<div id="toasts"></div>
+<input type="file" id="fileInput" multiple class="hidden">
+<input type="file" id="wallInput" accept="image/*" class="hidden">
+
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const API="https://api.github.com";
+const LS={token:"cfx_token_v3",theme:"cfx_theme_v3",bm:"cfx_bm_v3",fav:"cfx_fav_v3",rec:"cfx_rec_v3",set:"cfx_set_v3",repo:"cfx_repo_v3"};
+const SALT="CelSuite_Henny_Bae_269_26_2";
+const encTok=s=>{try{return btoa(unescape(encodeURIComponent(s)).split("").map((c,i)=>String.fromCharCode(c.charCodeAt(0)^SALT.charCodeAt(i%SALT.length))).join(""))}catch(e){return""}};
+const decTok=s=>{try{return decodeURIComponent(escape(atob(s).split("").map((c,i)=>String.fromCharCode(c.charCodeAt(0)^SALT.charCodeAt(i%SALT.length))).join("")))}catch(e){return""}};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmtBytes=n=>{if(n==null)return"";if(n<1024)return n+" B";const u=["KB","MB","GB"];let i=-1;do{n/=1024;i++}while(n>=1024&&i<u.length-1);return n.toFixed(n<10?1:0)+" "+u[i]};
+const extOf=n=>{const i=n.lastIndexOf(".");return i<1?"":n.slice(i+1).toLowerCase()};
+const relTime=iso=>{const d=(Date.now()-new Date(iso).getTime())/1000;if(d<60)return"just now";if(d<3600)return Math.floor(d/60)+"m ago";if(d<86400)return Math.floor(d/3600)+"h ago";if(d<2592000)return Math.floor(d/86400)+"d ago";return new Date(iso).toLocaleDateString()};
+const encPath=p=>p.split("/").map(encodeURIComponent).join("/");
+const encBranch=b=>b.split("/").map(encodeURIComponent).join("/");
+const textToB64=t=>btoa(unescape(encodeURIComponent(t)));
+let b64Worker=null;
+try{b64Worker=new Worker(URL.createObjectURL(new Blob(['self.onmessage=e=>{const b=new Uint8Array(e.data);let s="";const C=0x8000;for(let i=0;i<b.length;i+=C)s+=String.fromCharCode.apply(null,b.subarray(i,i+C));postMessage(btoa(s))};'],{type:"text/javascript"})))}catch(e){b64Worker=null}
+function fileToB64(f){
+  if(!b64Worker)return f.arrayBuffer().then(buf=>{const b=new Uint8Array(buf);let s="";const C=0x8000;for(let i=0;i<b.length;i+=C)s+=String.fromCharCode.apply(null,b.subarray(i,i+C));return btoa(s)});
+  return new Promise(res=>{const h=e=>{b64Worker.removeEventListener("message",h);res(e.data)};b64Worker.addEventListener("message",h);f.arrayBuffer().then(buf=>b64Worker.postMessage(buf,[buf]))});
+}
+const S={token:"",user:null,settings:{cache:true,recents:true,landscape:false,zoom:104,glass:false,anim:true,wall:{on:true,tint:35,custom:false},perRepo:{}},favorites:[],recents:[],bookmarks:[],logs:[],clipboard:{paths:[],cut:false},tabs:[],tab:0,pendingNewTab:false,repos:[],rate:null};
+function loadSettings(){try{Object.assign(S.settings,JSON.parse(localStorage.getItem(LS.set)||"{}"));S.settings.wall=Object.assign({on:true,tint:35,custom:false},S.settings.wall);if(S.settings.anim==null)S.settings.anim=true}catch(e){}}
+function saveSettings(){localStorage.setItem(LS.set,JSON.stringify(S.settings))}
+function loadLists(){try{S.favorites=JSON.parse(localStorage.getItem(LS.fav)||"[]");S.recents=JSON.parse(localStorage.getItem(LS.rec)||"[]");S.bookmarks=JSON.parse(localStorage.getItem(LS.bm)||"[]")}catch(e){}}
+const saveFav=()=>localStorage.setItem(LS.fav,JSON.stringify(S.favorites));
+const saveRec=()=>localStorage.setItem(LS.rec,JSON.stringify(S.recents));
+const saveBm=()=>localStorage.setItem(LS.bm,JSON.stringify(S.bookmarks));
+function toast(m,k){const t=document.createElement("div");t.className="toast"+(k?" "+k:"");t.textContent=m;$("toasts").appendChild(t);setTimeout(()=>{t.style.opacity="0";t.style.transition=".3s";setTimeout(()=>t.remove(),320)},4200)}
+function addLog(m,type="info",err=null){S.logs.unshift({time:new Date().toLocaleTimeString(),msg:m,type,err:err?(err.stack||err.message):null});if(S.logs.length>200)S.logs.pop();renderLogs()}
+function renderLogs(){$("logsList").innerHTML=S.logs.map(l=>`<div class="log-item ${l.type==="error"?"err":l.type==="ok"?"ok":""}"><span class="log-time">${l.time}</span> <b>${esc(l.msg)}</b>${l.err?`<div style="margin-top:4px;font-size:11px;white-space:pre-wrap;color:var(--danger)">${esc(l.err)}</div>`:""}</div>`).join("")||'<div style="padding:20px;text-align:center;color:var(--sub)">No logs yet.</div>'}
+function showLoading(m){$("loadingText").textContent=m;$("loadingOverlay").classList.remove("hidden")}
+function hideLoading(){$("loadingOverlay").classList.add("hidden")}
+function setProg(t){$("progTitle").textContent=t;$("progList").innerHTML="";$("progress").classList.remove("hidden");$("pip").classList.add("hidden");statProg(t)}
+function progLine(t,c){const d=document.createElement("div");if(c)d.className=c;d.textContent=t;$("progList").appendChild(d);$("progList").scrollTop=1e6;$("pipLog").innerHTML=$("progList").innerHTML;return d}
+function hideProg(){$("progress").classList.add("hidden");$("pip").classList.add("hidden");statProg("")}
+function statProg(t){$("statProg").textContent=t||""}
+function pushRecent(p,type){S.recents=S.recents.filter(r=>r.path!==p);S.recents.unshift({path:p,type,time:Date.now()});if(S.recents.length>40)S.recents.pop();saveRec();renderSide()}
+
+const IDB={db:null,
+ open(){return new Promise(res=>{try{const r=indexedDB.open("cfx27",1);r.onupgradeneeded=()=>{["thumbs","trees","blobs","meta"].forEach(s=>{if(!r.result.objectStoreNames.contains(s))r.result.createObjectStore(s)})};r.onsuccess=()=>{IDB.db=r.result;res()};r.onerror=()=>res()}catch(e){res()}})},
+ get(st,k){return new Promise(res=>{try{if(!IDB.db)return res(null);const t=IDB.db.transaction(st,"readonly").objectStore(st).get(k);t.onsuccess=()=>res(t.result||null);t.onerror=()=>res(null)}catch(e){res(null)}})},
+ set(st,k,v){try{if(!IDB.db)return;IDB.db.transaction(st,"readwrite").objectStore(st).put(v,k)}catch(e){}},
+ del(st,k){try{if(!IDB.db)return;IDB.db.transaction(st,"readwrite").objectStore(st).delete(k)}catch(e){}},
+ count(st){return new Promise(res=>{try{if(!IDB.db)return res(0);const t=IDB.db.transaction(st,"readonly").objectStore(st).count();t.onsuccess=()=>res(t.result||0);t.onerror=()=>res(0)}catch(e){res(0)}})},
+ keys(st){return new Promise(res=>{try{if(!IDB.db)return res([]);const t=IDB.db.transaction(st,"readonly").objectStore(st).getAllKeys();t.onsuccess=()=>res(t.result||[]);t.onerror=()=>res([])}catch(e){res([])}})}
+};
+IDB.open();
+const IMG_EXTS=["png","jpg","jpeg","gif","webp","svg","bmp","ico","avif"];
+const ANIM_EXTS=["gif","webp","avif","apng"];
+async function pruneThumbs(){
+  const n=await IDB.count("thumbs");if(n<400)return;
+  const keys=await IDB.keys("thumbs");const recs=[];
+  for(const k of keys)recs.push([k,await IDB.get("thumbs",k)]);
+  recs.sort((a,b)=>(a[1].t||0)-(b[1].t||0));
+  for(let i=0;i<recs.length-300;i++)IDB.del("thumbs",recs[i][0]);
+}
+async function thumbURL(path,sha){
+  const hit=await IDB.get("thumbs",sha);if(hit&&hit.d)return hit.d;
+  const blob=await apiRawBlob(path);const url=URL.createObjectURL(blob);
+  const img=new Image();await new Promise((res,rej)=>{img.onload=res;img.onerror=rej;img.src=url});
+  const max=128,sc=Math.min(1,max/Math.max(img.width||1,img.height||1));
+  const c=document.createElement("canvas");c.width=Math.max(1,Math.round((img.width||1)*sc));c.height=Math.max(1,Math.round((img.height||1)*sc));
+  c.getContext("2d").drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);
+  let d;try{d=c.toDataURL("image/webp",.85)}catch(e){d=c.toDataURL("image/png")}
+  IDB.set("thumbs",sha,{d,t:Date.now()});if(Math.random()<.06)pruneThumbs();
+  return d;
+}
+const thumbIO=new IntersectionObserver(es=>{es.forEach(async x=>{if(!x.isIntersecting)return;const img=x.target;thumbIO.unobserve(img);try{img.src=await thumbURL(img.dataset.path,img.dataset.thumb);img.classList.add("loaded")}catch(e){img.classList.add("loaded")}})},{rootMargin:"160px"});
+
+async function api(path,opts={}){
+  const headers=Object.assign({"Accept":"application/vnd.github+json","Authorization":"Bearer "+S.token,"X-GitHub-Api-Version":"2022-11-28"},opts.headers||{});
+  let res;try{res=await fetch(API+path,Object.assign({},opts,{headers}))}catch(e){const err=new Error("Network error ("+e.message+")");addLog("Fetch failed: "+path,"error",err);throw err}
+  const rem=res.headers.get("x-ratelimit-remaining");if(rem!=null)S.rate={remaining:+rem,reset:res.headers.get("x-ratelimit-reset")};
+  if(res.status===401){const err=new Error("401 — token rejected.");addLog("Auth failed","error",err);throw err}
+  if(res.status===403||res.status===429){const b=await res.json().catch(()=>null);const err=new Error("403/429 — "+((b&&b.message)||"rate limit"));addLog("Forbidden: "+path,"error",err);throw err}
+  if(!res.ok){const b=await res.json().catch(()=>null);const err=new Error(res.status+" — "+((b&&b.message)||res.statusText));addLog("API error: "+path,"error",err);throw err}
+  if(res.status===204)return null;
+  const ct=res.headers.get("content-type")||"";return ct.includes("json")?res.json():res.text();
+}
+async function apiRawBlob(path){
+  const res=await fetch(API+"/repos/"+T().repo.full+"/contents/"+encPath(path),{headers:{"Accept":"application/vnd.github.raw","Authorization":"Bearer "+S.token}});
+  if(!res.ok)throw new Error(res.status+" — could not fetch "+path);
+  return res.blob();
+}
+
+let tabSeq=0;
+function newPane(){return{path:"",history:[""],hIdx:0,selection:new Set(),anchor:-1,view:"icons",filter:"",sort:"name",limit:400}}
+function newTab(repo,branch,tree,cachedAt,readOnly){return{id:++tabSeq,repo,branch,readOnly:!!readOnly,tree:tree||[],truncated:false,commitInfo:null,branches:[],busy:false,cachedAt:cachedAt||null,panes:[newPane()],pane:0,split:null}}
+function T(){return S.tabs[S.tab]}
+function P(pi){const t=T();return t.panes[pi==null?t.pane:pi]}
+function cacheOnFor(full){const o=S.settings.perRepo[full];if(o!=null)return o;return S.settings.cache}
+async function fetchTree(tab){
+  const t=await api("/repos/"+tab.repo.full+"/git/trees/"+encBranch(tab.branch)+"?recursive=1");
+  tab.tree=t.tree||[];tab.truncated=!!t.truncated;tab.cachedAt=Date.now();
+  IDB.set("trees",tab.repo.full+"@"+tab.branch,{tree:tab.tree,time:tab.cachedAt});
+  try{const c=await api("/repos/"+tab.repo.full+"/commits?per_page=1&sha="+encBranch(tab.branch));tab.commitInfo=c[0];IDB.set("meta","commit:"+tab.repo.full+"@"+tab.branch,c[0])}catch(e){}
+}
+async function openRepo(full,branch){
+  $("repoErr").textContent="";
+  try{
+    const [owner,name]=full.split("/");
+    let meta=null;if(cacheOnFor(full))meta=await IDB.get("trees",full+"@"+branch);
+    let readOnly=false;
+    try{const rm=await api("/repos/"+full);readOnly=!(rm.permissions&&rm.permissions.push)}catch(e){readOnly=true}
+    const tab=newTab({full,owner,name},branch,meta?meta.tree:null,meta?meta.time:null,readOnly);
+    if(S.pendingNewTab){S.tabs.push(tab);S.tab=S.tabs.length-1;S.pendingNewTab=false}
+    else if(!S.tabs.length){S.tabs.push(tab);S.tab=0}
+    else S.tabs[S.tab]=tab;
+    localStorage.setItem(LS.repo,full);
+    $("screenRepo").classList.add("hidden");$("screenAuth").classList.add("hidden");$("app").classList.remove("hidden");
+    $("tbAvatar").src=S.user.avatar_url;$("tbLogin").textContent=S.user.login;
+    if(!meta)await fetchTree(tab);else tab.commitInfo=await IDB.get("meta","commit:"+full+"@"+branch)||tab.commitInfo;
+    try{const brs=await api("/repos/"+full+"/branches?per_page=100");tab.branches=brs.map(b=>b.name)}catch(e){tab.branches=[branch]}
+    renderAll();
+    toast("Opened "+full+" @ "+branch+(meta?" (cached — Retry for latest)":""),"ok");
+  }catch(e){$("repoErr").textContent=e.message}
+}
+async function refreshTab(){
+  const tab=T();if(!tab)return;
+  try{
+    await fetchTree(tab);
+    const brs=await api("/repos/"+tab.repo.full+"/branches?per_page=100");
+    tab.branches=brs.map(b=>b.name);IDB.set("meta","br:"+tab.repo.full,brs);
+    const sel=$("branchSel");sel.innerHTML="";for(const b of tab.branches){const o=document.createElement("option");o.value=b;o.textContent=b;sel.appendChild(o)}sel.value=tab.branch;
+    renderAll();toast("Updated to latest ✔","ok");
+  }catch(e){toast(e.message,"err")}
+}
+function closeTab(i){S.tabs.splice(i,1);if(S.tab>=S.tabs.length)S.tab=Math.max(0,S.tabs.length-1);if(!S.tabs.length){$("app").classList.add("hidden");showRepoPicker()}else renderAll()}
+function addTab(){S.pendingNewTab=true;$("app").classList.add("hidden");showRepoPicker()}
+function toggleSplit(o){const t=T();if(t.split===o||(!o&&t.split)){t.split=null;if(t.panes.length>1){t.panes=[t.panes[t.pane]||t.panes[0]];t.pane=0}}else{t.split=o||"v";if(t.panes.length<2){const p=newPane();p.path=(t.panes[t.pane]||t.panes[0]).path;t.panes.push(p)}}renderAll()}
+
+function entryAt(p,tab){tab=tab||T();return tab.tree.find(e=>e.path===p)}
+function listDir(dir,pane){
+  const pre=dir?dir+"/":"";const folders=[],files=[];
+  for(const e of T().tree){if(!e.path.startsWith(pre))continue;const rest=e.path.slice(pre.length);if(!rest||rest.includes("/"))continue;
+    if(e.type==="tree")folders.push({name:rest,path:e.path,type:"folder",sha:e.sha});
+    else if(rest!==".gitkeep")files.push({name:rest,path:e.path,type:"file",sha:e.sha,size:e.size,mode:e.mode})}
+  const s=(pane||P()).sort;
+  const byName=(a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true,sensitivity:"base"});
+  const bySize=(a,b)=>(b.size||0)-(a.size||0)||byName(a,b);
+  const byType=(a,b)=>extOf(a.name).localeCompare(extOf(b.name))||byName(a,b);
+  const fn=s==="size"?bySize:s==="type"?byType:byName;
+  folders.sort(byName);files.sort(fn);
+  return{folders,files};
+}
+function pathsUnder(dir,tab){tab=tab||T();return tab.tree.filter(e=>e.type==="blob"&&(e.path===dir||e.path.startsWith(dir+"/")))}
+function exists(p,tab){return!!entryAt(p,tab)}
+function freeName(p,tab){const i=p.lastIndexOf(".");const b=i>0?p.slice(0,i):p;const x=i>0?p.slice(i):"";let n=1,t=`${b} (${n})${x}`;while(exists(t,tab)){n++;t=`${b} (${n})${x}`}return t}
+function viewItems(pane){pane=pane||P();const{folders,files}=listDir(pane.path,pane);let items=folders.concat(files);if(pane.filter){const f=pane.filter.toLowerCase();items=items.filter(i=>i.name.toLowerCase().includes(f))}return items}
+
+async function commit(changes,message){
+  const tab=T();
+  if(tab.readOnly){toast("READ ONLY repo — no writes.","err");return}
+  if(tab.busy){toast("Another operation is running.","err");return}
+  tab.busy=true;setProg(message);
+  const line=progLine("Reading branch head…","run");
+  try{
+    const ref=await api("/repos/"+tab.repo.full+"/git/refs/heads/"+encBranch(tab.branch));
+    const base=await api("/repos/"+tab.repo.full+"/git/commits/"+ref.object.sha);
+    const entries=[];
+    for(let i=0;i<changes.length;i++){const c=changes[i];
+      if(c.op==="put"){line.textContent="Uploading blob "+(i+1)+"/"+changes.length+": "+c.path;
+        const b=await api("/repos/"+tab.repo.full+"/git/blobs",{method:"POST",body:JSON.stringify({content:c.b64||"",encoding:"base64"})});
+        entries.push({path:c.path,mode:"100644",type:"blob",sha:b.sha})}
+      else if(c.op==="putsha")entries.push({path:c.path,mode:c.mode||"100644",type:"blob",sha:c.sha});
+      else if(c.op==="del")entries.push({path:c.path,mode:"100644",type:"blob",sha:null})}
+    line.textContent="Writing tree…";
+    const nt=await api("/repos/"+tab.repo.full+"/git/trees",{method:"POST",body:JSON.stringify({base_tree:base.tree.sha,tree:entries})});
+    line.textContent="Creating commit…";
+    const cm=await api("/repos/"+tab.repo.full+"/git/commits",{method:"POST",body:JSON.stringify({message,tree:nt.sha,parents:[ref.object.sha]})});
+    line.textContent="Updating ref…";
+    await api("/repos/"+tab.repo.full+"/git/refs/heads/"+encBranch(tab.branch),{method:"PATCH",body:JSON.stringify({sha:cm.sha})});
+    line.textContent="✓ "+message;line.className="ok";
+    addLog("Committed: "+message,"ok");
+    await fetchTree(tab);renderAll();toast("Committed: "+message,"ok");return cm;
+  }catch(e){line.textContent="✗ "+e.message;line.className="bad";toast("Commit failed: "+e.message,"err");throw e}
+  finally{tab.busy=false;setTimeout(hideProg,700);statProg("")}
+}
+
+async function connect(ev){
+  if(ev)ev.preventDefault();
+  const uname=$("userInput").value.trim(),tok=$("tokInput").value.trim();
+  if(!uname){$("authErr").textContent="Type your GitHub username too 🙂";return}
+  if(!tok){$("authErr").textContent="Paste your token (password) 🙂";return}
+  $("authErr").textContent="";$("btnConnect").disabled=true;$("btnConnect").textContent="Signing in…";
+  try{
+    S.token=tok;S.user=await api("/user");
+    if(S.user.login.toLowerCase()!==uname.toLowerCase())throw new Error("Token belongs to "+S.user.login+", not "+uname+".");
+    if($("tokRemember").checked)localStorage.setItem(LS.token,encTok(tok));else localStorage.removeItem(LS.token);
+    try{if(window.PasswordCredential&&navigator.credentials)navigator.credentials.store(new PasswordCredential($("loginForm")))}catch(e){}
+    addLog("Connected as "+S.user.login,"ok");showRepoPicker();
+  }catch(e){$("authErr").textContent=e.message;S.token=""}
+  finally{$("btnConnect").disabled=false;$("btnConnect").textContent="Sign in"}
+}
+async function showRepoPicker(){
+  $("screenAuth").classList.add("hidden");$("screenRepo").classList.remove("hidden");
+  $("cancelRow").classList.toggle("hidden",!S.tabs.length);
+  $("rpAvatar").src=S.user.avatar_url;$("rpName").textContent=S.user.login+(S.user.name?" — "+S.user.name:"");
+  renderFavs();
+  let repos=null;if(S.settings.cache)repos=await IDB.get("meta","repos:"+S.user.login);
+  if(!repos){repos=await api("/user/repos?per_page=100&sort=pushed&direction=desc&affiliation=owner,collaborator,organization_member");IDB.set("meta","repos:"+S.user.login,repos)}
+  S.repos=repos;renderRepoList("");
+}
+function renderFavs(){const r=$("favRow");r.innerHTML="";S.favorites.slice(0,3).forEach(f=>{const b=document.createElement("button");b.className="btn";b.textContent="★ "+f.split("/")[1];b.title=f;b.onclick=()=>openRepo(f,"main");r.appendChild(b)})}
+function renderRepoList(filter){
+  const list=$("repoList");list.innerHTML="";const f=(filter||"").toLowerCase();
+  const rows=(S.repos||[]).filter(r=>r.full_name.toLowerCase().includes(f));
+  if(!rows.length){list.innerHTML='<div style="padding:14px;color:var(--sub)">No repositories match.</div>';return}
+  for(const r of rows){
+    const d=document.createElement("div");d.className="repoRow";d.dataset.full=r.full_name;d.dataset.branch=r.default_branch;
+    d.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/></svg><span class="nm">'+esc(r.full_name)+"</span>"+(r.private?'<span class="badge">private</span>':"")+(S.favorites.includes(r.full_name)?'<span class="badge cache">★</span>':"")+'<button class="ibtn favstar" title="Favourite" style="width:24px;height:24px"><svg width="14" height="14" viewBox="0 0 24 24" fill="'+(S.favorites.includes(r.full_name)?"var(--accent)":"none")+'" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button><span class="mt">'+relTime(r.pushed_at)+"</span>";
+    d.querySelector(".favstar").onclick=e=>{e.stopPropagation();toggleFav(r.full_name)};
+    d.onclick=()=>selectRepoRow(d);d.ondblclick=()=>openRepo(r.full_name,r.default_branch);
+    list.appendChild(d);
+  }
+}
+function toggleFav(full){if(S.favorites.includes(full))S.favorites=S.favorites.filter(x=>x!==full);else{S.favorites.push(full);if(S.favorites.length>3)S.favorites.shift()}saveFav();renderFavs();renderRepoList($("repoSearch").value)}
+async function selectRepoRow(row){
+  document.querySelectorAll(".repoRow").forEach(x=>x.classList.remove("sel"));
+  row.classList.add("sel");$("repoErr").textContent="";
+  const bs=$("branchSelect");bs.disabled=true;bs.innerHTML="<option>loading…</option>";$("btnOpenRepo").disabled=true;
+  try{
+    let brs=null;if(S.settings.cache)brs=await IDB.get("meta","br:"+row.dataset.full);
+    if(!brs){brs=await api("/repos/"+row.dataset.full+"/branches?per_page=100");IDB.set("meta","br:"+row.dataset.full,brs)}
+    bs.innerHTML="";for(const b of brs){const o=document.createElement("option");o.value=b.name;o.textContent=b.name;bs.appendChild(o)}
+    bs.value=row.dataset.branch;bs.disabled=false;$("btnOpenRepo").disabled=false;
+  }catch(e){$("repoErr").textContent=e.message;bs.innerHTML="<option>—</option>"}
+}
+async function createRepo(){
+  const name=$("nrName").value.trim();if(!name){toast("Repo name required","err");return}
+  $("nrCreate").disabled=true;
+  try{
+    await api("/user/repos",{method:"POST",body:JSON.stringify({name,description:$("nrDesc").value.trim()||undefined,private:$("nrPrivate").checked,auto_init:$("nrInit").checked})});
+    addLog("Created repo "+name,"ok");toast("Repository created: "+name,"ok");
+    $("modalNewRepo").classList.add("hidden");$("nrName").value="";$("nrDesc").value="";
+    S.repos=await api("/user/repos?per_page=100&sort=pushed&direction=desc&affiliation=owner,collaborator,organization_member");
+    IDB.set("meta","repos:"+S.user.login,S.repos);renderRepoList($("repoSearch").value);
+  }catch(e){toast(e.message,"err")}finally{$("nrCreate").disabled=false}
+}
+
+function pageIcon(g,c){return'<svg width="44" height="44" viewBox="0 0 48 48"><path d="M12 4h16l8 8v32H12Z" fill="var(--panel)" stroke="var(--border2)" stroke-width="1.4"/><path d="M28 4v8h8" fill="var(--bg)" stroke="var(--border2)" stroke-width="1.4"/><g stroke="'+c+'" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">'+g+"</g></svg>"}
+const GLYPH={image:'<circle cx="21" cy="24" r="3" fill="COLOR" stroke="none"/><path d="M16 36l6-7 4 4 5-6 5 9"/>',code:'<path d="M20 22l-5 5 5 5M28 22l5 5-5 5"/>',font:'<path d="M17 36l7-16 7 16M19.5 30h9"/>',archive:'<path d="M24 18v18m0-18-2 2m2-2 2 2m-2 2-2 2m2-2 2 2m-2 2-2 2m2-2 2 2"/>',audio:'<path d="M21 34V22l9-2v12"/><circle cx="19" cy="34" r="2.6" fill="COLOR" stroke="none"/><circle cx="28" cy="32" r="2.6" fill="COLOR" stroke="none"/>',video:'<path d="M20 22v12l10-6Z" fill="COLOR" stroke="none"/>',text:'<path d="M17 22h14M17 27h14M17 32h9"/>',file:'<path d="M17 24h14M17 30h10"/>'};
+const EXTMAP={image:{exts:IMG_EXTS,color:"#2e7d32"},code:{exts:["html","css","js","ts","py","json","yml","yaml","sh","bat","ps1","c","cpp","h","rs","go","java","toml","xml"],color:"#1565c0"},font:{exts:["otf","ttf","woff","woff2"],color:"#6a1b9a"},archive:{exts:["zip","7z","rar","tar","gz","xz","apk","exe","bin","msi"],color:"#e65100"},audio:{exts:["mp3","wav","ogg","flac","m4a"],color:"#c2185b"},video:{exts:["mp4","webm","mkv","mov","avi"],color:"#b71c1c"},text:{exts:["md","txt","log","csv","ini","cfg","license","gitignore"],color:"#546e7a"}};
+function iconFor(item){
+  if(item.type==="folder")return'<svg width="44" height="44" viewBox="0 0 48 48"><path d="M6 12a3 3 0 0 1 3-3h10l4 4h16a3 3 0 0 1 3 3v20a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3Z" fill="var(--fold)" stroke="var(--fold2)" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+  const e=extOf(item.name);
+  for(const k in EXTMAP)if(EXTMAP[k].exts.includes(e))return pageIcon(GLYPH[k].replaceAll("COLOR",EXTMAP[k].color),EXTMAP[k].color);
+  return pageIcon(GLYPH.file,"#78909c");
+}
+function typeLabel(item){if(item.type==="folder")return"File folder";const e=extOf(item.name);if(!e)return"File";for(const k in EXTMAP)if(EXTMAP[k].exts.includes(e))return e.toUpperCase()+" "+k[0].toUpperCase()+k.slice(1);return e.toUpperCase()+" File"}
+const smallIcon=s=>s.replace('width="44" height="44"','width="18" height="18"');
+
+async function applyWallpaper(){
+  const w=S.settings.wall,bg=$("appbg"),tint=$("appbgTint");
+  if(!w.on){bg.classList.add("hidden");tint.classList.add("hidden");return}
+  bg.classList.remove("hidden");tint.classList.remove("hidden");
+  tint.style.opacity=(w.tint/100).toFixed(2);
+  let url=null;
+  if(w.custom){const c=await IDB.get("meta","wallpaper");if(c)url=c}
+  if(!url){
+    const ok=await new Promise(r=>{const i=new Image();i.onload=()=>r(true);i.onerror=()=>r(false);i.src="wallpaper.webp"});
+    if(ok)url="wallpaper.webp";
+    else{try{const r=await fetch("wallpaper.webp");if(r.ok)url=URL.createObjectURL(await r.blob())}catch(e){}}
+  }
+  if(url)bg.style.backgroundImage='url("'+url+'")';else{bg.classList.add("hidden");tint.classList.add("hidden")}
+}
+function applyGlass(){
+  const on=!!S.settings.glass;
+  if(on)document.documentElement.setAttribute("data-glass","on");else document.documentElement.removeAttribute("data-glass");
+  $("setGlass").checked=on;
+}
+function applySettings(){
+  document.documentElement.style.setProperty("--zoom",S.settings.zoom+"px");
+  document.documentElement.setAttribute("data-anim",S.settings.anim?"on":"off");
+  applyGlass();applyWallpaper();
+  if(S.settings.landscape){try{screen.orientation.lock("landscape").catch(()=>{})}catch(e){}}else{try{screen.orientation.unlock()}catch(e){}}
+  renderSide();renderTitle();
+}
+
+function renderAll(){renderTabs();renderTitle();renderSide();renderPanes();renderStatus()}
+function renderTitle(){const t=T();if(!t)return;
+  $("roBadge").classList.toggle("hidden",!t.readOnly);
+  $("cacheBadge").classList.toggle("hidden",!(t.cachedAt&&cacheOnFor(t.repo.full)));
+  $("btnCache").classList.toggle("active",cacheOnFor(t.repo.full));
+  $("btnFav").classList.toggle("active",S.favorites.includes(t.repo.full));
+}
+function renderTabs(){
+  const s=$("tabstrip");s.innerHTML="";
+  S.tabs.forEach((t,i)=>{const d=document.createElement("div");d.className="tab"+(i===S.tab?" active":"");
+    d.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/></svg><span>'+esc(t.repo.name)+" @ "+esc(t.branch)+(t.readOnly?" 🔒":"")+'</span><span class="x">✕</span>';
+    d.onclick=e=>{if(e.target.closest(".x")){closeTab(i);return}S.tab=i;renderAll()};s.appendChild(d)});
+  const plus=document.createElement("button");plus.className="ibtn";plus.title="New tab (Ctrl+T)";plus.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>';plus.onclick=addTab;s.appendChild(plus);
+}
+function renderSide(){
+  const t=T();if(!t)return;
+  const q=$("sideQuick");q.innerHTML="";
+  const mk=(label,icon,fn,active)=>{const b=document.createElement("button");b.className="sideItem"+(active?" active":"");b.innerHTML=icon+"<span>"+esc(label)+"</span>";b.onclick=fn;q.appendChild(b)};
+  mk(t.repo.name,smallIcon(iconFor({type:"folder"})),()=>nav("",null,true),P().path==="");
+  if(t.tree.some(e=>e.type==="tree"&&e.path==="assets"))mk("assets",smallIcon(iconFor({type:"folder"})),()=>nav("assets",null,true),P().path==="assets");
+  const rr=$("sideRecent");rr.innerHTML="";rr.parentElement.style.display=S.settings.recents?"":"none";
+  S.recents.slice(0,12).forEach(r=>{const b=document.createElement("button");b.className="sideItem";b.title=r.path;
+    b.innerHTML=smallIcon(iconFor({type:r.type,name:r.path.split("/").pop()}))+"<span>"+esc(r.path.split("/").pop())+"</span>";
+    b.onclick=()=>{const e=entryAt(r.path);if(!e){toast("Gone from tree","err");S.recents=S.recents.filter(x=>x.path!==r.path);saveRec();renderSide();return}if(e.type==="tree")nav(r.path,null,true);else opPreview(e)};
+    rr.appendChild(b)});
+  const bb=$("sideBm");bb.innerHTML="";
+  S.bookmarks.forEach(p=>{const b=document.createElement("button");b.className="sideItem";b.title=p;
+    b.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="var(--accent)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> <span>'+esc(p.split("/").pop())+"</span>";
+    b.onclick=()=>{const e=entryAt(p);if(e&&e.type==="tree")nav(p,null,true);else if(e)opPreview(e);else{toast("Bookmark missing","err");S.bookmarks=S.bookmarks.filter(x=>x!==p);saveBm();renderSide()}};
+    b.oncontextmenu=e=>{e.preventDefault();S.bookmarks=S.bookmarks.filter(x=>x!==p);saveBm();renderSide();toast("Bookmark removed")};
+    bb.appendChild(b)});
+  const blobs=t.tree.filter(e=>e.type==="blob");
+  $("sideCard").innerHTML="<b>"+esc(t.repo.full)+"</b><br>branch: "+esc(t.branch)+(t.readOnly?"<br><span style='color:var(--danger)'>READ ONLY</span>":"")+"<br>"+blobs.length+" files · "+fmtBytes(blobs.reduce((a,e)=>a+(e.size||0),0))+(t.cachedAt&&cacheOnFor(t.repo.full)?"<br><span style='color:var(--ok)'>cached "+relTime(new Date(t.cachedAt).toISOString())+"</span>":"");
+}
+function renderPanes(){
+  const t=T();if(!t)return;
+  const wrap=$("panewrap");wrap.innerHTML="";
+  wrap.className="panewrap"+(t.split==="v"?" split-v":t.split==="h"?" split-h":"");
+  t.panes.forEach((p,pi)=>{
+    const pv=document.createElement("div");pv.className="paneview"+(pi===t.pane?" active":"");
+    pv.innerHTML='<div class="pcrumbs"></div><div class="pane'+(p.view==="icons"?" grid":"")+'"></div>';
+    pv.onmousedown=()=>{if(t.pane!==pi){t.pane=pi;document.querySelectorAll(".paneview").forEach(x=>x.classList.remove("active"));pv.classList.add("active");renderStatus()}};
+    wrap.appendChild(pv);
+    renderCrumbsInto(pv.querySelector(".pcrumbs"),pi);
+    renderPaneInto(pv.querySelector(".pane"),pi);
+  });
+}
+function renderCrumbsInto(el,pi){
+  const t=T(),p=t.panes[pi];el.innerHTML="";
+  const home=document.createElement("button");home.className="crumb";
+  home.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 11 12 4l8 7v9h-6v-6h-4v6H4Z"/></svg><span>'+esc(t.repo.name)+"</span>";
+  home.onclick=()=>nav("",pi,true);el.appendChild(home);
+  if(p.path){let acc="";for(const part of p.path.split("/")){acc=acc?acc+"/"+part:part;
+    const ch=document.createElement("span");ch.className="crumb chev";ch.textContent="›";el.appendChild(ch);
+    const b=document.createElement("button");b.className="crumb";b.textContent=part;const tg=acc;b.onclick=()=>nav(tg,pi,true);el.appendChild(b)}}
+}
+function renderPaneInto(pane,pi){
+  const t=T(),p=t.panes[pi];
+  pane.className="pane"+(p.view==="icons"?" grid":"");
+  pane.dataset.pi=pi;pane.innerHTML="";
+  const all=viewItems(p);
+  const items=all.slice(0,p.limit);
+  if(!all.length){pane.innerHTML='<div class="empty"><span>'+(p.filter?"Nothing matches":"Empty folder — drop files or hit Upload")+"</span></div>";bindPaneDrop(pane,pi);return}
+  if(p.view==="details"){const h=document.createElement("div");h.className="dhead";h.innerHTML='<div class="c-name">Name</div><div class="c-size">Size</div><div class="c-type">Type</div>';pane.appendChild(h)}
+  items.forEach((it,idx)=>{
+    let node;const isImg=it.type==="file"&&IMG_EXTS.includes(extOf(it.name));
+    if(p.view==="icons"){node=document.createElement("div");node.className="tile";
+      node.innerHTML=(isImg?'<img class="thumb" data-thumb="'+it.sha+'" data-path="'+esc(it.path)+'" alt="">':iconFor(it))+'<div class="lbl">'+esc(it.name)+"</div>"}
+    else{node=document.createElement("div");node.className="drow";
+      node.innerHTML='<div class="c-name">'+(isImg?'<img class="thumb" style="width:22px;height:22px" data-thumb="'+it.sha+'" data-path="'+esc(it.path)+'" alt="">':smallIcon(iconFor(it)))+"<span>"+esc(it.name)+"</span></div>"+'<div class="c-size">'+(it.type==="file"?fmtBytes(it.size):"")+'</div><div class="c-type">'+typeLabel(it)+"</div>"}
+    node.dataset.path=it.path;node.dataset.type=it.type;node.dataset.idx=idx;node.dataset.pi=pi;
+    if(p.selection.has(it.path))node.classList.add("sel");
+    bindItem(node,it,pi);pane.appendChild(node);
+  });
+  if(all.length>p.limit){
+    const more=document.createElement("button");more.className="btn";more.style.margin="8px auto";more.textContent="Show "+(all.length-p.limit)+" more…";
+    more.onclick=()=>{p.limit+=400;renderPaneInto(pane,pi);syncSel(pi)};
+    pane.appendChild(more);
+  }
+  pane.querySelectorAll("img[data-thumb]:not([src])").forEach(img=>thumbIO.observe(img));
+  bindPaneDrop(pane,pi);
+}
+function bindPaneDrop(pane,pi){
+  pane.ondragover=e=>{if(e.dataTransfer.types.includes("Files")){e.preventDefault();pane.classList.add("dropping")}};
+  pane.ondragleave=e=>{if(e.target===pane)pane.classList.remove("dropping")};
+  pane.ondrop=e=>{if(e.dataTransfer.files.length){e.preventDefault();pane.classList.remove("dropping");opUpload([...e.dataTransfer.files],P(pi).path)}};
+}
+function renderStatus(){
+  const t=T();if(!t)return;const items=viewItems();
+  $("statItems").textContent=items.length+" item"+(items.length===1?"":"s")+(items.length<P().limit?"":" (capped)");
+  $("statSel").textContent=P().selection.size?" · "+P().selection.size+" selected":"";
+  $("statCommit").textContent=t.commitInfo?"latest: "+t.commitInfo.sha.slice(0,7):"";
+  $("statRate").textContent=S.rate?"API: "+S.rate.remaining:"";
+  $("sortSel").value=P().sort;
+  $("btnBack").disabled=P().hIdx<=0;$("btnFwd").disabled=P().hIdx>=P().history.length-1;$("btnUp").disabled=P().path==="";
+  const n=P().selection.size,ro=t.readOnly;
+  $("btnRename").disabled=n!==1||ro;$("btnDelete").disabled=!n||ro;$("btnDownload").disabled=!n;
+  $("btnNewFolder").disabled=ro;$("btnUpload").disabled=ro;$("btnPaste").disabled=!S.clipboard.paths.length||ro;
+  $("btnCopy").disabled=!n;$("btnCut").disabled=!n||ro;
+}
+function nav(path,pi,push){
+  pi=pi==null?T().pane:pi;const t=T(),p=t.panes[pi];
+  if(path&&!t.tree.some(e=>e.type==="tree"&&e.path===path)){toast("Folder not found: "+path,"err");return}
+  p.path=path;p.selection.clear();p.anchor=-1;p.limit=400;
+  if(push!==false){p.history=p.history.slice(0,p.hIdx+1);p.history.push(path);p.hIdx=p.history.length-1}
+  if(path){const e=entryAt(path);if(e)pushRecent(path,"tree")}
+  t.pane=pi;renderPanes();renderSide();renderStatus();
+}
+function syncSel(pi){
+  pi=pi==null?T().pane:pi;
+  document.querySelectorAll('#panewrap [data-pi="'+pi+'"].tile, #panewrap [data-pi="'+pi+'"].drow').forEach(n=>n.classList.toggle("sel",P(pi).selection.has(n.dataset.path)));
+  renderStatus();
+}
+function openItem(it,pi){if(it.type==="folder")nav(it.path,pi,true);else{opPreview(it);pushRecent(it.path,"blob")}}
+
+function buildGhost(paths){
+  const g=document.createElement("div");g.className="dragghost";
+  paths.slice(0,3).forEach((p,i)=>{const e=entryAt(p);const d=document.createElement("div");d.className="gc";d.style.zIndex=3-i;d.style.transform="rotate("+((i-1)*7)+"deg) translate("+(i*7)+"px,"+(i*5)+"px)";d.innerHTML=smallIcon(iconFor(e||{type:"file",name:p.split("/").pop()}));g.appendChild(d)});
+  if(paths.length>1){const b=document.createElement("span");b.className="gcount";b.textContent=paths.length;g.appendChild(b)}
+  document.body.appendChild(g);return g;
+}
+const placeGhost=(g,x,y)=>{g.style.left=(x-32)+"px";g.style.top=(y-32)+"px"};
+let lpTimer=0,lpAt=0,touchDrag=null;
+function dropTargetAt(x,y){
+  const el=document.elementFromPoint(x,y);if(!el)return null;
+  if(el.closest("#sideQuick .sideItem"))return"";
+  const node=el.closest('.tile[data-type="folder"], .drow[data-type="folder"]');
+  return node?node.dataset.path:null;
+}
+function highlightDrop(x,y){document.querySelectorAll(".dragover").forEach(n=>n.classList.remove("dragover"));const t=dropTargetAt(x,y);if(t===null)return;const node=document.querySelector('#panewrap [data-path="'+CSS.escape(t)+'"]');if(node)node.classList.add("dragover")}
+function clearDropHighlight(){document.querySelectorAll(".dragover").forEach(n=>n.classList.remove("dragover"))}
+function bindItem(node,it,pi){
+  node.onclick=e=>{
+    e.stopPropagation();const p=P(pi);const items=viewItems(p);const idx=+node.dataset.idx;
+    if(e.shiftKey&&p.anchor>=0){p.selection.clear();const a=Math.min(p.anchor,idx),b=Math.max(p.anchor,idx);for(let i=a;i<=b;i++)p.selection.add(items[i].path)}
+    else if(e.ctrlKey||e.metaKey){if(p.selection.has(it.path))p.selection.delete(it.path);else p.selection.add(it.path);p.anchor=idx}
+    else{p.selection.clear();p.selection.add(it.path);p.anchor=idx}
+    T().pane=pi;syncSel(pi);
+  };
+  node.ondblclick=e=>{e.stopPropagation();openItem(it,pi)};
+  node.oncontextmenu=e=>{
+    if(Date.now()-lpAt<900){e.preventDefault();return}
+    e.preventDefault();e.stopPropagation();const p=P(pi);
+    if(!p.selection.has(it.path)){p.selection.clear();p.selection.add(it.path);syncSel(pi)}
+    T().pane=pi;showCtx(e.clientX,e.clientY,it,pi);
+  };
+  node.draggable=true;
+  node.ondragstart=e=>{
+    const p=P(pi);const paths=p.selection.size?[...p.selection]:[it.path];
+    e.dataTransfer.setData("application/x-cfx",JSON.stringify(paths));e.dataTransfer.effectAllowed="move";
+    const g=buildGhost(paths);placeGhost(g,-500,-500);
+    try{e.dataTransfer.setDragImage(g,32,32)}catch(err){}
+    setTimeout(()=>g.remove(),0);
+  };
+  if(it.type==="folder"){
+    node.ondragover=e=>{if(e.dataTransfer.types.includes("application/x-cfx")||e.dataTransfer.types.includes("Files")){e.preventDefault();node.classList.add("dragover")}};
+    node.ondragleave=()=>node.classList.remove("dragover");
+    node.ondrop=async e=>{
+      e.preventDefault();e.stopPropagation();node.classList.remove("dragover");
+      const internal=e.dataTransfer.getData("application/x-cfx");
+      if(internal)await opMove(JSON.parse(internal),it.path);
+      else if(e.dataTransfer.files.length)await opUpload([...e.dataTransfer.files],it.path);
+    };
+  }
+  node.addEventListener("touchstart",e=>{
+    if(e.touches.length!==1)return;const t0=e.touches[0],sx=t0.clientX,sy=t0.clientY;
+    clearTimeout(lpTimer);
+    lpTimer=setTimeout(()=>{
+      lpAt=Date.now();if(navigator.vibrate)navigator.vibrate(25);
+      const p=P(pi);if(!p.selection.has(it.path)){p.selection.clear();p.selection.add(it.path);syncSel(pi)}
+      touchDrag={paths:[...p.selection],ghost:buildGhost([...p.selection])};placeGhost(touchDrag.ghost,sx,sy);
+    },450);
+  },{passive:true});
+  node.addEventListener("touchmove",e=>{
+    if(touchDrag){e.preventDefault();const t0=e.touches[0];placeGhost(touchDrag.ghost,t0.clientX,t0.clientY);highlightDrop(t0.clientX,t0.clientY)}
+    else clearTimeout(lpTimer);
+  },{passive:false});
+  const fin=e=>{clearTimeout(lpTimer);if(touchDrag){const t0=(e.changedTouches&&e.changedTouches[0])||null;const dest=t0?dropTargetAt(t0.clientX,t0.clientY):null;touchDrag.ghost.remove();clearDropHighlight();const paths=touchDrag.paths;touchDrag=null;if(dest!==null&&dest!==undefined)opMove(paths,dest)}};
+  node.addEventListener("touchend",fin);
+  node.addEventListener("touchcancel",()=>{clearTimeout(lpTimer);if(touchDrag){touchDrag.ghost.remove();clearDropHighlight();touchDrag=null}});
+}
+
+/* marquee: global, left-button only (leak + right-drag fixed) */
+let mq=null,mqStart=null,mqPane=null,mqPi=0;
+document.addEventListener("mousedown",e=>{
+  if(e.button!==0)return;
+  const pane=e.target.closest(".pane");if(!pane)return;
+  if(e.target.closest(".tile,.drow,button,input,a"))return;
+  mqPane=pane;mqPi=+pane.dataset.pi;const p=P(mqPi);
+  if(!e.ctrlKey&&!e.metaKey&&!e.shiftKey){p.selection.clear();syncSel(mqPi)}
+  const pr=pane.getBoundingClientRect();
+  mqStart={x:e.clientX-pr.left+pane.scrollLeft,y:e.clientY-pr.top+pane.scrollTop};
+  mq=document.createElement("div");mq.className="marquee";pane.appendChild(mq);
+});
+document.addEventListener("mousemove",e=>{
+  if(!mq||!mqPane)return;
+  const pr=mqPane.getBoundingClientRect();
+  const x0=e.clientX-pr.left+mqPane.scrollLeft,y0=e.clientY-pr.top+mqPane.scrollTop;
+  const x=Math.min(x0,mqStart.x),y=Math.min(y0,mqStart.y),w=Math.abs(x0-mqStart.x),h=Math.abs(y0-mqStart.y);
+  mq.style.left=x+"px";mq.style.top=y+"px";mq.style.width=w+"px";mq.style.height=h+"px";
+  const mr=mq.getBoundingClientRect();const sel=P(mqPi).selection;
+  mqPane.querySelectorAll(".tile,.drow").forEach(n=>{const r=n.getBoundingClientRect();const hit=!(r.right<mr.left||r.left>mr.right||r.bottom<mr.top||r.top>mr.bottom);
+    if(hit)sel.add(n.dataset.path);else if(!e.ctrlKey&&!e.metaKey)sel.delete(n.dataset.path)});
+  syncSel(mqPi);
+});
+document.addEventListener("mouseup",()=>{if(mq){mq.remove();mq=null;mqPane=null}});
+
+function validName(n){n=(n||"").trim();if(!n)return"Name is empty.";if(n.includes("/")||n.includes("\\")||n===".")return"Invalid characters.";return null}
+function askInput(title,value,ok){return new Promise(res=>{$("inpTitle").textContent=title;$("inpField").value=value||"";$("inpOk").textContent=ok||"OK";$("modalInput").classList.remove("hidden");$("inpField").focus();$("inpField").select();
+  const d=v=>{$("modalInput").classList.add("hidden");$("inpOk").onclick=$("inpCancel").onclick=$("inpField").onkeydown=null;res(v)};
+  $("inpOk").onclick=()=>d($("inpField").value.trim());$("inpCancel").onclick=()=>d(null);
+  $("inpField").onkeydown=e=>{if(e.key==="Enter")d($("inpField").value.trim());if(e.key==="Escape")d(null)}})}
+function askConfirm(title,msg,ok,danger){return new Promise(res=>{$("cfTitle").textContent=title;$("cfMsg").innerHTML=msg;$("cfOk").textContent=ok||"OK";$("cfOk").className="btn primary"+(danger?" danger":"");$("cfAlt").classList.add("hidden");$("cfCancel").textContent="Cancel";$("modalConfirm").classList.remove("hidden");
+  const d=v=>{$("modalConfirm").classList.add("hidden");$("cfOk").onclick=$("cfCancel").onclick=null;res(v)};
+  $("cfOk").onclick=()=>d(true);$("cfCancel").onclick=()=>d(false)})}
+function askConflicts(list){return new Promise(res=>{$("cfTitle").textContent="Name conflicts";
+  $("cfMsg").innerHTML="<b>"+list.length+" file(s)</b> already exist at the destination:<br>"+list.slice(0,8).map(p=>"• "+esc(p.split("/").pop())).join("<br>")+(list.length>8?" …":"")+'<div style="margin-top:10px;color:var(--sub)">Replace them, keep both versions, or skip?</div>';
+  $("cfOk").textContent="Replace";$("cfOk").className="btn primary danger";$("cfAlt").textContent="Keep both";$("cfAlt").className="btn";$("cfAlt").classList.remove("hidden");$("cfCancel").textContent="Skip";
+  $("modalConfirm").classList.remove("hidden");
+  const d=v=>{$("modalConfirm").classList.add("hidden");$("cfAlt").classList.add("hidden");$("cfOk").onclick=$("cfCancel").onclick=$("cfAlt").onclick=null;res(v)};
+  $("cfOk").onclick=()=>d("replace");$("cfAlt").onclick=()=>d("both");$("cfCancel").onclick=()=>d("skip")})}
+
+async function opNewFolder(dir){
+  if(T().readOnly){toast("READ ONLY repo.","err");return}
+  dir=dir==null?P().path:dir;
+  const name=await askInput("New folder in /"+(dir||""),"New folder","Create");if(name===null)return;
+  const bad=validName(name);if(bad){toast(bad,"err");return}
+  const full=(dir?dir+"/":"")+name;if(exists(full)){toast("Already exists: "+name,"err");return}
+  try{await commit([{op:"put",path:full+"/.gitkeep",b64:""}],"chore(fs): create folder /"+full);nav(full,null,false);renderAll()}catch(e){}
+}
+async function opUpload(files,dir){
+  if(T().readOnly){toast("READ ONLY repo.","err");return}
+  dir=dir==null?P().path:dir;if(!files.length)return;
+  let plan=[];
+  for(const f of files){const bad=validName(f.name);if(bad){toast(f.name+": "+bad,"err");continue}
+    if(f.size>60*1024*1024){toast(f.name+" is over 60 MB.","err");continue}
+    plan.push({target:(dir?dir+"/":"")+f.name,file:f})}
+  const conflicts=plan.filter(x=>exists(x.target)).map(x=>x.target);
+  if(conflicts.length){const m=await askConflicts(conflicts);
+    if(m==="skip")plan=plan.filter(x=>!conflicts.includes(x.target));
+    else if(m==="both")plan.forEach(x=>{if(conflicts.includes(x.target))x.target=freeName(x.target)})}
+  if(!plan.length)return;
+  const changes=[];for(const x of plan)changes.push({op:"put",path:x.target,b64:await fileToB64(x.file)});
+  try{await commit(changes,"feat(assets): upload "+changes.length+" file(s)")}catch(e){}
+}
+async function opRename(){
+  if(T().readOnly){toast("READ ONLY repo.","err");return}
+  const p=P();if(p.selection.size!==1)return;
+  const path=[...p.selection][0];const entry=entryAt(path);if(!entry)return;
+  const old=path.split("/").pop();
+  const name=await askInput("Rename "+old,old,"Rename");if(name===null||name===old)return;
+  const bad=validName(name);if(bad){toast(bad,"err");return}
+  const parent=path.slice(0,path.length-old.length);const target=parent+name;
+  if(exists(target)){toast("Already exists: "+name,"err");return}
+  try{
+    const changes=[];
+    if(entry.type==="tree")for(const e of pathsUnder(path))changes.push({op:"putsha",path:target+e.path.slice(path.length),sha:e.sha,mode:e.mode},{op:"del",path:e.path});
+    else changes.push({op:"putsha",path:target,sha:entry.sha,mode:entry.mode},{op:"del",path});
+    await commit(changes,"chore(fs): rename "+old+" → "+name);
+    p.selection.clear();p.selection.add(target);syncSel();
+  }catch(e){}
+}
+async function opDelete(){
+  if(T().readOnly){toast("READ ONLY repo.","err");return}
+  const p=P();const paths=[...p.selection];if(!paths.length)return;
+  const ok=await askConfirm("Delete "+paths.length+" item(s)?","Deleting:<br>"+paths.map(x=>"• <b>"+esc(x)+"</b>").join("<br>"),"Delete",true);
+  if(!ok)return;
+  try{
+    const changes=[];
+    for(const x of paths){const e=entryAt(x);if(e&&e.type==="tree")for(const c of pathsUnder(x))changes.push({op:"del",path:c.path});else changes.push({op:"del",path:x})}
+    await commit(changes,"chore(fs): delete "+paths.length+" item(s)");
+    p.selection.clear();syncSel();
+  }catch(e){}
+}
+async function opMove(paths,destDir){
+  if(T().readOnly){toast("READ ONLY repo.","err");return}
+  let plan=[],missing=[];
+  for(const p of paths){const e=entryAt(p);if(!e){missing.push(p);continue}
+    const name=p.split("/").pop();
+    if(p===destDir||destDir===p||destDir.startsWith(p+"/"))continue;
+    const parent=p.slice(0,p.length-name.length).replace(/\/$/,"");
+    if(parent===destDir)continue;
+    plan.push({e,p,target:(destDir?destDir+"/":"")+name})}
+  if(missing.length){toast(missing.length+" item(s) no longer exist — refreshing…","err");refreshTab()}
+  const conflicts=plan.filter(x=>exists(x.target)).map(x=>x.target);
+  if(conflicts.length){const m=await askConflicts(conflicts);
+    if(m==="skip")plan=plan.filter(x=>!conflicts.includes(x.target));
+    else if(m==="both")plan.forEach(x=>{if(conflicts.includes(x.target))x.target=freeName(x.target)})}
+  if(!plan.length)return;
+  const changes=[];
+  for(const x of plan){
+    if(x.e.type==="tree")for(const c of pathsUnder(x.p))changes.push({op:"putsha",path:x.target+c.path.slice(x.p.length),sha:c.sha,mode:c.mode},{op:"del",path:c.path});
+    else changes.push({op:"putsha",path:x.target,sha:x.e.sha,mode:x.e.mode},{op:"del",path:x.p})}
+  try{await commit(changes,"chore(fs): move "+plan.length+" item(s) to /"+(destDir||"root"));P().selection.clear();syncSel()}catch(e){}
+}
+const blobCache=new Map();
+async function opDownload(paths){
+  for(const p of paths){const e=entryAt(p);if(!e||e.type==="tree"){toast("Folders can't be downloaded.","err");continue}
+    try{const blob=await apiRawBlob(p);const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=p.split("/").pop();document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000)}catch(err){toast(err.message,"err")}}
+}
+function opCopyPaths(cut){const p=P();if(!p.selection.size)return;S.clipboard={paths:[...p.selection],cut:!!cut&&!T().readOnly};toast((cut?"Cut ":"Copied ")+p.selection.size+" item(s)","ok");renderStatus()}
+async function opPaste(){
+  if(T().readOnly){toast("READ ONLY repo.","err");return}
+  const cb=S.clipboard;if(!cb.paths.length)return;
+  const dest=P().path;let plan=[];
+  for(const p of cb.paths){const e=entryAt(p);if(!e)continue;
+    const name=p.split("/").pop();
+    const parent=p.slice(0,p.length-name.length).replace(/\/$/,"");
+    if(parent===dest&&!cb.cut)plan.push({e,p,target:freeName((dest?dest+"/":"")+name)});
+    else if(parent!==dest)plan.push({e,p,target:(dest?dest+"/":"")+name})}
+  const conflicts=plan.filter(x=>exists(x.target)).map(x=>x.target);
+  if(conflicts.length){const m=await askConflicts(conflicts);
+    if(m==="skip")plan=plan.filter(x=>!conflicts.includes(x.target));
+    else if(m==="both")plan.forEach(x=>{if(conflicts.includes(x.target))x.target=freeName(x.target)})}
+  if(!plan.length)return;
+  const changes=[];
+  for(const x of plan){
+    if(x.e.type==="tree")for(const c of pathsUnder(x.p))changes.push({op:"putsha",path:x.target+c.path.slice(x.p.length),sha:c.sha,mode:c.mode});
+    else changes.push({op:"putsha",path:x.target,sha:x.e.sha,mode:x.e.mode});
+    if(cb.cut){if(x.e.type==="tree")for(const c of pathsUnder(x.p))changes.push({op:"del",path:c.path});else changes.push({op:"del",path:x.p})}}
+  try{await commit(changes,(cb.cut?"move":"copy")+": "+plan.length+" item(s) to /"+(dest||"root"));if(cb.cut)S.clipboard={paths:[],cut:false};renderStatus()}catch(e){}
+}
+function opProps(){
+  const p=P();if(p.selection.size!==1)return;
+  const e=entryAt([...p.selection][0]);if(!e)return;
+  $("propsTitle").textContent="Properties — "+e.path.split("/").pop();
+  $("propsBody").innerHTML=["<b>Path:</b> "+esc(e.path),"<b>Type:</b> "+typeLabel(e),"<b>Size:</b> "+(e.size!=null?fmtBytes(e.size):"folder · "+pathsUnder(e.path).length+" files"),"<b>SHA:</b> "+esc(e.sha||""),"<b>Mode:</b> "+esc(e.mode||"040000"),"<b>Branch:</b> "+esc(T().branch),"<b>Repo:</b> "+esc(T().repo.full)].join("<br>");
+  $("modalProps").classList.remove("hidden");
+}
+function sanitizeSVG(t){return t.replace(/<script[\s\S]*?<\/script>/gi,"").replace(/\son\w+="[^"]*"/gi,"").replace(/\son\w+='[^']*'/gi,"").replace(/javascript:/gi,"")}
+async function opPreview(it){
+  const e=extOf(it.name);
+  $("pvTitle").textContent=it.name;$("pvBody").innerHTML='<div style="color:var(--sub)">loading…</div>';$("pvMeta").textContent="";
+  $("modalPreview").classList.remove("hidden");
+  $("pvDownload").onclick=()=>opDownload([it.path]);
+  $("pvRaw").onclick=()=>window.open("https://github.com/"+T().repo.full+"/blob/"+encBranch(T().branch)+"/"+encPath(it.path),"_blank");
+  $("pvEdit").classList.add("hidden");
+  const meta=["path: "+it.path,"size: "+fmtBytes(it.size),"sha: "+it.sha];
+  const TXT=["md","txt","html","css","js","ts","py","json","yml","yaml","log","csv","ini","cfg","toml","xml","sh","bat","gitignore","license"];
+  const AUD=["mp3","wav","ogg","flac","m4a"],VID=["mp4","webm","mkv","mov","avi"],FNT=["otf","ttf","woff","woff2"];
+  const getBlob=async()=>{let b=blobCache.get(it.sha);if(!b){b=await apiRawBlob(it.path);if(blobCache.size>6)blobCache.clear();blobCache.set(it.sha,b)}return b};
+  try{
+    if(e==="svg"){
+      let text=await IDB.get("blobs",it.sha);
+      if(!text){const b=await getBlob();text=await b.text();if(text.length<512*1024)IDB.set("blobs",it.sha,text)}
+      $("pvBody").innerHTML='<div class="svglive">'+sanitizeSVG(text)+"</div>";
+    }else if(IMG_EXTS.includes(e)){
+      const b=await getBlob();$("pvBody").innerHTML='<img alt="">';$("pvBody").firstChild.src=URL.createObjectURL(b);
+    }else if(AUD.includes(e)){const b=await getBlob();$("pvBody").innerHTML="<audio controls></audio>";$("pvBody").firstChild.src=URL.createObjectURL(b)}
+    else if(VID.includes(e)){const b=await getBlob();$("pvBody").innerHTML='<video controls style="max-height:52vh"></video>';$("pvBody").firstChild.src=URL.createObjectURL(b)}
+    else if(FNT.includes(e)){
+      const b=await getBlob();const buf=await b.arrayBuffer();const fn="pv"+Date.now();
+      const face=new FontFace(fn,buf);await face.load();document.fonts.add(face);
+      $("pvBody").innerHTML='<div class="fontspec" style="font-family:\''+fn+'\'"><div class="l1">CelSuite Aa Bb Cc</div><div class="l2">The quick brown fox</div><div class="l3">Live type specimen</div></div>';
+    }else if(TXT.includes(e)||it.size<512*1024){
+      let text=await IDB.get("blobs",it.sha);
+      if(!text){const b=await getBlob();text=await b.text();if(text.length<512*1024)IDB.set("blobs",it.sha,text)}
+      if(/\u0000/.test(text.slice(0,2000)))$("pvBody").innerHTML='<div style="color:var(--sub)">Binary file.</div>';
+      else{$("pvBody").innerHTML="<pre>"+esc(text)+"</pre>";
+        if(!T().readOnly){$("pvEdit").classList.remove("hidden");$("pvEdit").onclick=()=>{$("modalPreview").classList.add("hidden");opEdit(it,text)}}}
+    }else $("pvBody").innerHTML='<div style="color:var(--sub);text-align:center">No preview.</div>';
+  }catch(err){$("pvBody").innerHTML='<div style="color:var(--danger)">Preview failed: '+esc(err.message)+"</div>"}
+  $("pvMeta").innerHTML=meta.map(esc).join("<br>");
+}
+function opEdit(it,initial){
+  $("editTitle").textContent="Edit: "+it.name;$("editArea").value=initial||"";$("modalEdit").classList.remove("hidden");
+  $("editSave").onclick=async()=>{try{await commit([{op:"put",path:it.path,b64:textToB64($("editArea").value)}],"edit: "+it.name+" via Repo Explorer");$("modalEdit").classList.add("hidden")}catch(e){}};
+  $("editCancel").onclick=()=>$("modalEdit").classList.add("hidden");
+}
+function showCtx(x,y,item,pi){
+  const ctx=$("ctx");const n=P(pi).selection.size;const ro=T().readOnly;
+  const mi=(label,icon,fn,cls,dis)=>{const b=document.createElement("button");b.className="ci"+(cls?" "+cls:"");b.disabled=!!dis;b.innerHTML=icon+"<span>"+label+"</span>";b.onclick=()=>{ctx.style.display="none";fn()};ctx.appendChild(b)};
+  const sep=()=>{const d=document.createElement("div");d.className="csep";ctx.appendChild(d)};
+  ctx.innerHTML="";
+  if(item){
+    mi(item.type==="folder"?"Open":"Preview",'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/></svg>',()=>openItem(item,pi));
+    mi("Download",'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 4v11m-4-4 4 4 4-4M4 19h16"/></svg>',()=>opDownload([...P(pi).selection]));
+    mi("Copy (Ctrl+C)",'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>',()=>opCopyPaths(false));
+    mi("Cut (Ctrl+X)",'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8 7.5 20 18M8 16.5 20 6"/></svg>',()=>opCopyPaths(true),"",ro);
+    mi("Rename (F2)",'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20h4L20 8l-4-4L4 16v4Z"/></svg>',opRename,"",n!==1||ro);
+    mi("Properties (Alt+Enter)",'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M12 10v6M12 7v.5"/></svg>',opProps,"",n!==1);
+    mi("Bookmark ⭐",'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',()=>{if(!S.bookmarks.includes(item.path)){S.bookmarks.push(item.path);saveBm();renderSide();toast("Bookmarked ⭐","ok")}});
+    mi("Copy path",'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 8h12v12H8z"/></svg>',()=>{navigator.clipboard.writeText(item.path).then(()=>toast("Copied","ok"))});
+    sep();
+    mi("Delete (Del)",'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M9 7V4h6v3m-8 0 1 13h8l1-13"/></svg>',opDelete,"danger",ro);
+  }else{
+    mi("New folder",'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>',()=>opNewFolder(),"",ro);
+    mi("Upload files",'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 15V4m-4 4 4-4 4 4M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>',()=>$("fileInput").click(),"",ro);
+    mi("Paste (Ctrl+V)",'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4a3 3 0 0 1 6 0"/></svg>',opPaste,"",!S.clipboard.paths.length||ro);
+    mi("Retry / refresh (F5)",'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M20 11a8 8 0 1 0-2.3 6.3M20 5v6h-6"/></svg>',refreshTab);
+    sep();
+    mi("Select all (Ctrl+A)",'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m8 12 3 3 5-6"/></svg>',()=>{viewItems().forEach(i=>P().selection.add(i.path));syncSel()});
+    mi("Shortcuts (F1)",'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M12 11v5M12 8v.5"/></svg>',()=>$("modalHelp").classList.remove("hidden"));
+  }
+  ctx.style.display="block";
+  const r=ctx.getBoundingClientRect();
+  ctx.style.left=Math.min(x,innerWidth-r.width-8)+"px";ctx.style.top=Math.min(y,innerHeight-r.height-8)+"px";
+}
+function runSearch(q){
+  const r=$("searchResults");r.innerHTML="";if(!q)return;
+  const f=q.toLowerCase();let count=0;
+  for(const e of T().tree){if(count>=200)break;
+    if(e.path.toLowerCase().includes(f)){count++;
+      const b=document.createElement("button");b.className="sideItem";b.style.width="100%";
+      b.innerHTML=smallIcon(iconFor(e.type==="tree"?{type:"folder"}:{type:"file",name:e.path.split("/").pop()}))+"<span>"+esc(e.path)+"</span>";
+      b.onclick=()=>{$("modalSearch").classList.add("hidden");if(e.type==="tree")nav(e.path,null,true);else{opPreview(e);pushRecent(e.path,"blob")}};
+      r.appendChild(b)}}
+  if(!count)r.innerHTML='<div style="padding:14px;color:var(--sub)">No matches.</div>';
+}
+function renderSettings(){
+  $("setCache").checked=S.settings.cache;
+  $("setRecents").checked=S.settings.recents;
+  $("setLandscape").checked=S.settings.landscape;
+  $("setZoom").value=S.settings.zoom;
+  $("setWall").checked=S.settings.wall.on;
+  $("setTint").value=S.settings.wall.tint;
+  $("setAnim").checked=!!S.settings.anim;
+  applyGlass();
+  const list=$("setCacheList");list.innerHTML="";
+  Object.keys(S.settings.perRepo).forEach(k=>{
+    const d=document.createElement("div");d.style.cssText="display:flex;align-items:center;gap:8px;padding:4px 0";
+    d.innerHTML='<span style="flex:1">'+esc(k)+"</span>"+'<label class="switch"><input type="checkbox" '+(S.settings.perRepo[k]?"checked":"")+' data-repo="'+esc(k)+'"><span class="sl"></span></label>'+'<button class="ibtn" data-del="'+esc(k)+'" style="width:24px;height:24px">✕</button>';
+    d.querySelector("input").onchange=e=>{S.settings.perRepo[k]=e.target.checked;saveSettings();renderTitle()};
+    d.querySelector("[data-del]").onclick=()=>{delete S.settings.perRepo[k];saveSettings();renderSettings();renderTitle()};
+    list.appendChild(d)});
+  if(!list.children.length)list.innerHTML='<div style="color:var(--sub);padding:6px 0">None yet — use the ⚡ toggle in the app.</div>';
+}
+
+$("loginForm").onsubmit=connect;
+$("tokEye").onclick=()=>{const i=$("tokInput");i.type=i.type==="password"?"text":"password"};
+$("repoSearch").oninput=e=>renderRepoList(e.target.value);
+$("btnOpenRepo").onclick=()=>{const row=document.querySelector(".repoRow.sel");if(row)openRepo(row.dataset.full,$("branchSelect").value)};
+$("btnToggleOther").onclick=()=>$("otherRow").classList.toggle("hidden");
+$("btnOpenOther").onclick=()=>{const v=$("otherRepoInput").value.trim();if(/^[^/\s]+\/[^/\s]+$/.test(v))openRepo(v,$("branchSelect").value||"main");else $("repoErr").textContent="Use owner/repo format."};
+$("btnCancelPicker").onclick=()=>{S.pendingNewTab=false;$("screenRepo").classList.add("hidden");$("app").classList.remove("hidden")};
+$("btnNewRepo").onclick=()=>$("modalNewRepo").classList.remove("hidden");
+$("nrCancel").onclick=()=>$("modalNewRepo").classList.add("hidden");
+$("nrCreate").onclick=createRepo;
+$("btnBackToAuth").onclick=()=>{localStorage.removeItem(LS.token);location.reload()};
+$("btnSignOut").onclick=async()=>{if(await askConfirm("Sign out?","Remove the stored token?","Sign out",true)){localStorage.removeItem(LS.token);location.reload()}};
+$("btnBack").onclick=()=>{const p=P();if(p.hIdx>0){p.hIdx--;p.path=p.history[p.hIdx];p.selection.clear();p.limit=400;renderPanes();renderStatus()}};
+$("btnFwd").onclick=()=>{const p=P();if(p.hIdx<p.history.length-1){p.hIdx++;p.path=p.history[p.hIdx];p.selection.clear();p.limit=400;renderPanes();renderStatus()}};
+$("btnUp").onclick=()=>{const p=P();nav(p.path.includes("/")?p.path.slice(0,p.path.lastIndexOf("/")):"")};
+$("btnNewFolder").onclick=()=>opNewFolder();
+$("btnUpload").onclick=()=>$("fileInput").click();
+$("fileInput").onchange=e=>{opUpload([...e.target.files]);e.target.value=""};
+$("btnCopy").onclick=()=>opCopyPaths(false);
+$("btnCut").onclick=()=>opCopyPaths(true);
+$("btnPaste").onclick=opPaste;
+$("btnRename").onclick=opRename;
+$("btnDelete").onclick=opDelete;
+$("btnDownload").onclick=()=>opDownload([...P().selection]);
+$("btnRefresh").onclick=refreshTab;
+$("btnSplit").onclick=()=>toggleSplit("v");
+$("btnSplitH").onclick=()=>toggleSplit("h");
+$("btnSearch").onclick=()=>{$("modalSearch").classList.remove("hidden");$("searchField").focus()};
+$("searchField").oninput=e=>runSearch(e.target.value.trim());
+$("searchClose").onclick=()=>$("modalSearch").classList.add("hidden");
+$("viewIcons").onclick=()=>{P().view="icons";$("viewIcons").classList.add("active");$("viewDetails").classList.remove("active");renderPanes();syncSel()};
+$("viewDetails").onclick=()=>{P().view="details";$("viewDetails").classList.add("active");$("viewIcons").classList.remove("active");renderPanes();syncSel()};
+$("sortSel").onchange=e=>{P().sort=e.target.value;renderPanes();syncSel()};
+$("branchSel").onchange=e=>openRepo(T().repo.full,e.target.value);
+let filterT=0;
+$("filterInput").oninput=e=>{clearTimeout(filterT);const v=e.target.value;filterT=setTimeout(()=>{P().filter=v.trim();P().limit=400;renderPanes();syncSel()},120)};
+$("btnCache").onclick=()=>{const t=T();if(!t)return;const cur=cacheOnFor(t.repo.full);S.settings.perRepo[t.repo.full]=!cur;saveSettings();applySettings();renderSettings();toast(!cur?"This repo will stay cached ⚡":"Cache off for this repo","ok")};
+$("btnFav").onclick=()=>{const t=T();if(t)toggleFav(t.repo.full)};
+$("btnGithubTab").onclick=()=>{const t=T();if(t)window.open("https://github.com/"+t.repo.full+"/tree/"+encBranch(t.branch)+(P().path?"/"+encPath(P().path):""),"_blank")};
+$("btnSettings").onclick=()=>{renderSettings();$("modalSettings").classList.remove("hidden")};
+$("setClose").onclick=()=>$("modalSettings").classList.add("hidden");
+$("setCache").onchange=e=>{S.settings.cache=e.target.checked;saveSettings();renderTitle();renderSide()};
+$("setRecents").onchange=e=>{S.settings.recents=e.target.checked;saveSettings();renderSide()};
+$("setGlass").onchange=e=>{S.settings.glass=e.target.checked;saveSettings();applyGlass()};
+$("setAnim").onchange=e=>{S.settings.anim=e.target.checked;saveSettings();document.documentElement.setAttribute("data-anim",S.settings.anim?"on":"off")};
+$("setWall").onchange=e=>{S.settings.wall.on=e.target.checked;saveSettings();applyWallpaper()};
+$("setTint").oninput=e=>{S.settings.wall.tint=+e.target.value;saveSettings();$("appbgTint").style.opacity=(S.settings.wall.tint/100).toFixed(2)};
+$("setWallChange").onclick=()=>$("wallInput").click();
+$("wallInput").onchange=async e=>{
+  const f=e.target.files[0];if(!f)return;
+  const url=URL.createObjectURL(f);
+  IDB.set("meta","wallpaper",url);
+  S.settings.wall.custom=true;saveSettings();applyWallpaper();toast("Wallpaper updated 🖼️","ok");e.target.value="";
+};
+$("setWallReset").onclick=()=>{S.settings.wall.custom=false;IDB.del("meta","wallpaper");saveSettings();applyWallpaper();toast("Wallpaper reset")};
+$("setLandscape").onchange=e=>{S.settings.landscape=e.target.checked;saveSettings();applySettings()};
+$("setZoom").oninput=e=>{S.settings.zoom=+e.target.value;saveSettings();applySettings()};
+$("setAbout").onclick=()=>$("modalAbout").classList.remove("hidden");
+$("aboutClose").onclick=()=>$("modalAbout").classList.add("hidden");
+$("btnLogs").onclick=()=>$("modalLogs").classList.remove("hidden");
+$("logsClose").onclick=()=>$("modalLogs").classList.add("hidden");
+$("logsClear").onclick=()=>{S.logs=[];renderLogs();toast("Logs cleared","ok")};
+$("progMin").onclick=()=>{$("progress").classList.add("hidden");$("pip").classList.remove("hidden")};
+$("pipClose").onclick=()=>$("pip").classList.add("hidden");
+$("pvClose").onclick=()=>$("modalPreview").classList.add("hidden");
+$("propsClose").onclick=()=>$("modalProps").classList.add("hidden");
+$("helpClose").onclick=()=>$("modalHelp").classList.add("hidden");
+$("btnMobileMenu").onclick=()=>$("sidebar").classList.toggle("open");
+$("themeSelect").onchange=e=>{document.documentElement.setAttribute("data-theme",e.target.value);localStorage.setItem(LS.theme,e.target.value);applyGlass()};
+["heQuick","heRecent","heBm"].forEach(id=>{$(id).onclick=()=>{const target=$(id).nextElementSibling;const open=target.style.display!=="none";target.style.display=open?"none":"";$(id).lastElementChild.textContent=open?"▸":"▾"}});
+document.addEventListener("click",e=>{if(!e.target.closest("#ctx"))$("ctx").style.display="none"});
+document.addEventListener("keydown",e=>{
+  if($("app").classList.contains("hidden"))return;
+  const typing=/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName);
+  if(e.key==="Escape"){$("ctx").style.display="none";["modalPreview","modalEdit","modalNewRepo","modalSearch","modalProps","modalHelp","modalSettings","modalAbout"].forEach(id=>$(id).classList.add("hidden"));return}
+  if(e.key==="F1"){e.preventDefault();$("modalHelp").classList.remove("hidden");return}
+  if(e.key==="F3"){e.preventDefault();toggleSplit("v");return}
+  if(e.key==="F4"){e.preventDefault();toggleSplit("h");return}
+  if(e.key==="F5"){e.preventDefault();refreshTab();return}
+  if(typing)return;
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="t"){e.preventDefault();addTab();return}
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="w"){e.preventDefault();closeTab(S.tab);return}
+  if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==="f"){e.preventDefault();$("modalSearch").classList.remove("hidden");$("searchField").focus();return}
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="c"){opCopyPaths(false);return}
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="x"){opCopyPaths(true);return}
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="v"){opPaste();return}
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="a"){e.preventDefault();viewItems().forEach(i=>P().selection.add(i.path));syncSel();return}
+  if(e.key==="F2"){e.preventDefault();opRename()}
+  else if(e.key==="Delete")opDelete();
+  else if(e.key==="Backspace"){e.preventDefault();$("btnUp").click()}
+  else if(e.key==="Enter"&&P().selection.size===1){const e2=entryAt([...P().selection][0]);if(e2)openItem(e2)}
+  else if(e.altKey&&e.key==="Enter")opProps();
+  else if(e.altKey&&e.key==="ArrowLeft")$("btnBack").click();
+  else if(e.altKey&&e.key==="ArrowRight")$("btnFwd").click();
+});
+
+async function boot(){
+  loadSettings();loadLists();
+  const theme=localStorage.getItem(LS.theme)||"dark";
+  document.documentElement.setAttribute("data-theme",theme);$("themeSelect").value=theme;
+  applySettings();
+  const saved=decTok(localStorage.getItem(LS.token)||"");
+  if(saved){
+    S.token=saved;$("tokRemember").checked=true;
+    showLoading("Restoring session…");
+    try{S.user=await api("/user");hideLoading();$("screenAuth").classList.add("hidden");showRepoPicker();addLog("Session restored for "+S.user.login,"ok")}
+    catch(e){localStorage.removeItem(LS.token);S.token="";hideLoading()}
+  }
+}
+boot();
+</script>
+</body>
+</html>
