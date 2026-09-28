@@ -1,10 +1,17 @@
-# CelSuite GitHub Repository Explorer
+<p align="center">
+  <img src="icon.webp" width="120" style="border-radius: 28px" alt="CelSuite Repo Explorer"/>
+</p>
+<h1 align="center">CelSuite — GitHub Repository Explorer</h1>
+<p align="center"><b>Windows-Explorer-grade file management for GitHub repos, packed into one obfuscated HTML file and four native shells. Upload, move, rename, delete, preview, edit — every action lands as a single clean atomic commit.</b></p>
+<p align="center">
+  <img src="https://img.shields.io/badge/RELEASE-v269.26.3-ff4d4d?style=for-the-badge" alt="release"/>
+  <img src="https://img.shields.io/badge/PLATFORM-WINDOWS%20%7C%20LINUX%20%7C%20ANDROID-0067c0?style=for-the-badge" alt="platform"/>
+  <img src="https://img.shields.io/badge/SHELL-WEBVIEW2%20%7C%20TAURI%20%7C%20WEBVIEW-6ccb5f?style=for-the-badge" alt="shell"/>
+  <img src="https://img.shields.io/badge/LICENSE-PROPRIETARY-8a8a8a?style=for-the-badge" alt="license"/>
+</p>
+<img src="banner.webp" width="100%" style="border-radius: 14px" alt="banner"/>
 
-**Windows-Explorer-grade file management for GitHub repos, packed into one HTML file. Upload, move, rename, delete, preview, edit — every action lands as a single clean atomic commit.**
-
-* * *
-
-## 🌟 Overview
+## Overview
 
 **CelSuite GitHub Repository Explorer** is a complete browser-native repo workspace:
 
@@ -14,11 +21,9 @@
 - **Preview Pipeline:** Images with live animated SVG/GIF/WebP, audio, video, font type-specimens, inline text editor.
 - **Safety Rails:** Encrypted token at rest, password-manager login, READ ONLY mode, full system logs.
 
-* * *
+## Downloads & Releases
 
-## 📦 Downloads & Releases
-
-All desktop executables, mobile packages and single-file builds are produced automatically by GitHub Actions on every tag.
+All executables, mobile packages and single-file builds are produced by the private factory's GitHub Actions on every tag and published here.
 
 👉 **Download the Latest Release (v269.26.3)**
 
@@ -32,71 +37,50 @@ All desktop executables, mobile packages and single-file builds are produced aut
 | 📄 **Any OS** | `CelSuite-RepoExplorer-v269.26.3.html` | Single File | The entire app, obfuscated, double-click anywhere |
 | 🗜️ **Any OS** | `CelSuite-RepoExplorer-v269.26.3-Portable.zip` | Web Pack | html + icon + wallpaper for your own server |
 
-* * *
+## Key Features
 
-## ✨ Key Features
+- **Atomic Commits:** Every mutation is one clean Git commit via the Git Data API — no force-pushes, no mess.
+- **Tabs & Split Panes:** Windows 11 tabs with Linux-Mint-Nemo instant split (F3 / F4), drag between panes.
+- **Desktop-Grade Selection:** Marquee draw-box, Shift ranges, Ctrl combos, long-press hold-drag on touch.
+- **Cache Cloud:** Per-repo pinning; retry-only updates; commits refresh the cache themselves.
+- **Nine Themes:** Dark, OLED Dark, Light, CelSuite Red, Sunset, Ocean, Violet, Forest, Matrix + Liquid Glass modifier.
+- **Wallpaper Engine:** Custom image behind every theme with tint slider or full disable.
+- **Encrypted Credentials:** Token encrypted at rest; login form speaks to your browser's password manager.
+- **READ ONLY Mode:** Any public repo opens browsable; writes disable themselves without push rights.
+- **System Logs:** Every API call, error and stack trace inspectable in-app.
 
-- ⚡ **Atomic Commits:** Every mutation is one clean Git commit via the Git Data API — no force-pushes, no mess.
-- 🗂️ **Tabs & Split Panes:** Windows 11 tabs with Linux-Mint-Nemo instant split (F3 / F4), drag between panes.
-- 🖱️ **Desktop-Grade Selection:** Marquee draw-box, Shift ranges, Ctrl combos, long-press hold-drag on touch.
-- ⚡ **Cache Cloud:** Per-repo pinning; retry-only updates; commits refresh the cache themselves.
-- 🎨 **Nine Themes:** Dark, OLED Dark, Light, CelSuite Red, Sunset, Ocean, Violet, Forest, Matrix + Liquid Glass modifier.
-- 🖼️ **Wallpaper Engine:** Custom image behind every theme with tint slider or full disable.
-- 🔐 **Encrypted Credentials:** Token encrypted at rest; login form speaks to your browser's password manager.
-- 👁️ **READ ONLY Mode:** Any public repo opens browsable; writes disable themselves without push rights.
-- 🧾 **System Logs:** Every API call, error and stack trace inspectable in-app.
+## How It Works
 
-* * *
+    Browser / native shell                          GitHub Git Data API
+           │                                                 │
+           ├──── GET tree (recursive, cached) ──────────────>│  (Instant open)
+           ├──── POST blobs (worker-encoded) ───────────────>│  (Uploads)
+           ├──── POST tree (base_tree + deltas) ────────────>│  (Move/rename/delete)
+           ├──── POST commit + PATCH ref ───────────────────>│  (Atomic save)
+           └──── IndexedDB cloud ← trees / blobs / thumbs    │  (Offline instant)
 
-## 🚀 How It Works
+## Quick Setup
 
-```
-Browser / native shell                          GitHub Git Data API
-       │                                                 │
-       ├──── GET tree (recursive, cached) ──────────────>│  (Instant open)
-       │                                                 │
-       ├──── POST blobs (worker-encoded) ───────────────>│  (Uploads)
-       │                                                 │
-       ├──── POST tree (base_tree + deltas) ────────────>│  (Move/rename/delete)
-       │                                                 │
-       ├──── POST commit + PATCH ref ───────────────────>│  (Atomic save)
-       │                                                 │
-       └──── IndexedDB cloud ← trees / blobs / thumbs    │  (Offline instant)
-```
-
-* * *
-
-## 🛠️ Quick Setup
-
-### 📱 Android Setup:
-
+### Android Setup:
 1. Install the APK (allow unknown sources once).
 2. Open, sign in with username + PAT, pick a repo. Done.
 
-### 💻 PC Setup (Windows / Linux):
-
+### PC Setup (Windows / Linux):
 1. Download the Portable exe / Linux bin (or install the deb).
 2. Launch — WebView2 ships with Windows 10/11; WebKit ships with most distros.
 3. Sign in with a classic `repo` token or fine-grained **Contents: Read & write**.
 
-### 🌐 Any-OS Setup:
-
+### Any-OS Setup:
 1. Double-click the single html file (or unzip the Web Pack on your server).
 2. Sign in, pick a repo, drag things. Every fix is one commit.
 
-* * *
-
-## 📜 Changelog
+## Changelog
 
 See CHANGELOG.md for full version history and release notes.
 
-* * *
+## License
 
-## 📄 License
+Proprietary — © 2026 HenryJayz. All rights reserved. This repository contains documentation and release artifacts only; all build machinery lives in a private factory. Redistribution of unmodified binaries is welcome, claiming them as yours is not.
 
-Proprietary — © 2026 HenryJayz. All rights reserved. Shipped binaries are obfuscated; source is published for personal study only. Redistribution of unmodified binaries is welcome, claiming them as yours is not.
-
-* * *
-
-<div align="center"><img src="banner_footer.webp" width="100%" style="border-radius: 14px; max-width: 820px;" /></div>
+<img src="banner_footer.webp" width="100%" style="border-radius: 14px" alt="footer"/>
 <p align="center"><sub>Part of the <b>CelSuite</b> family — programs you didn't know you needed. Built late-night by HenryJayz with an AI co-dev who negotiated her credit into the About dialog.</sub></p>
