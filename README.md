@@ -4,7 +4,7 @@
 <h1 align="center">CelSuite — GitHub Repository Explorer</h1>
 <p align="center"><b>Windows-Explorer-grade file management for GitHub repos, packed into one obfuscated HTML file and four native shells. Upload, move, rename, delete, preview, edit — every action lands as a single clean atomic commit.</b></p>
 <p align="center">
-  <img src="https://img.shields.io/badge/RELEASE-v269.26.3-ff4d4d?style=for-the-badge" alt="release"/>
+  <img src="https://img.shields.io/badge/RELEASE-v269.28.0-ff4d4d?style=for-the-badge" alt="release"/>
   <img src="https://img.shields.io/badge/PLATFORM-WINDOWS%20%7C%20LINUX%20%7C%20ANDROID-0067c0?style=for-the-badge" alt="platform"/>
   <img src="https://img.shields.io/badge/SHELL-WEBVIEW2%20%7C%20TAURI%20%7C%20WEBVIEW-6ccb5f?style=for-the-badge" alt="shell"/>
   <img src="https://img.shields.io/badge/LICENSE-PROPRIETARY-8a8a8a?style=for-the-badge" alt="license"/>
@@ -25,17 +25,17 @@
 
 All executables, mobile packages and single-file builds are produced by the private factory's GitHub Actions on every tag and published here.
 
-👉 **Download the Latest Release (v269.26.3)**
+👉 **Download the Latest Release (v269.28.0)**
 
 | Platform | Download Asset | Type | Description |
 | :-- | :-- | :-- | :-- |
-| 📱 **Android** | `CelSuite-RepoExplorer-v269.26.3.apk` | Mobile App | WebView shell, works offline, tiny |
+| 📱 **Android** | `CelSuite-RepoExplorer-v269.28.0.apk` | Mobile App | WebView shell, works offline, tiny |
 | 🪟 **Windows** | `CelSuite-RepoExplorer-Windows-Portable.exe` | Single File | WebView2 portable executable (zero install, double-click to run) |
 | 🪟 **Windows** | `CelSuite-RepoExplorer-Windows-Standalone.zip` | Standalone Folder | Unzip and run for instant cold-boot startup |
 | 🐧 **Linux** | `CelSuite-RepoExplorer-Linux-Portable.bin` | AppImage | `chmod +x` and launch directly |
 | 🐧 **Linux** | `CelSuite-RepoExplorer-Linux-Standalone.deb` | Debian Package | `sudo dpkg -i` and go |
-| 📄 **Any OS** | `CelSuite-RepoExplorer-v269.26.3.html` | Single File | The entire app, obfuscated, double-click anywhere |
-| 🗜️ **Any OS** | `CelSuite-RepoExplorer-v269.26.3-Portable.zip` | Web Pack | html + icon + wallpaper for your own server |
+| 📄 **Any OS** | `CelSuite-RepoExplorer-v269.28.0.html` | Single File | The entire app, obfuscated, double-click anywhere |
+| 🗜️ **Any OS** | `CelSuite-RepoExplorer-v269.28.0-Portable.zip` | Web Pack | html + icon + wallpaper for your own server |
 
 ## Key Features
 
